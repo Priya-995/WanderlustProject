@@ -8,7 +8,7 @@ const methodOverride=require('method-override')
 const ejsMate=require("ejs-mate")
 const wrapAsync=require('./utils/wrapAsync.js');
 const ExpressError=require('./utils/ExpressError.js')
-
+const {listingSchema}=require('./schema.js')
 // Set the view engine to EJS
 app.set('view engine', 'ejs');
 // Set the directory where the views are located
@@ -40,6 +40,15 @@ async function main() {
 app.get("/",(req,res)=>{
   res.send("res send")
 })
+const validateListing=(req,res,next)=>{
+  let {error}=listingSchema.validate(req.body)
+  if(error){
+    let errMsg=error.details.map((el)=>el.message).join(",");
+    throw new ExpressError(400,errMsg )
+  }else{
+    next();
+  }
+}
 
 //⁡⁢⁢⁣index route⁡
 app.get("/listings",wrapAsync(async (req,res)=>{
@@ -62,13 +71,9 @@ app.get("/listings/new",(req,res)=>{
 //⁡⁢⁢⁣A POST request is a way for a client (like your browser or app) to send data to a server.
 //Purpose: Usually to create new data or submit information.
 //Data goes in the body of the request (not the URL).⁡
-app.post("/listings", wrapAsync(async(req, res, next) => {
- 
+app.post("/listings",validateListing, wrapAsync(async(req, res, next) => {
+
   
-  if(!req.body || !req.body.listing){
-    
-    throw new ExpressError(400, "Send valid data for listing");
-  }
   
   const newListing = new Listing(req.body.listing);
   await newListing.save();
@@ -115,7 +120,7 @@ app.use((req,res,next)=>{
 app.use((err, req, res, next) => {
  
   let {status=500, message="Something went wrong!"} = err;
-  res.status(status).render("error",{message}); // For API responses
+  res.status(status).render("error",{message}); 
 })
 
 app.listen(PORT,()=>{
