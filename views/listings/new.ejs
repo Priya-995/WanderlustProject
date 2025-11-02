@@ -1,28 +1,329 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Create a New Listing</h1>
-    <form method="POST" action="/listings">
-        <input name="listing[title]" placeholder="enter title" type="text">
-        <br>
-        <input name="listing[description]" placeholder="enter description" type="text">
-         <br>
-        <input name="listing[image]" placeholder="enter image URL/LINK" type="text">
-         <br><br>
-        <input name="listing[price]" placeholder="enter price" type="number">
-           <br><br>
-        <input name="listing[country]" placeholder="enter country" type="text">
-           <br><br>
-        <input name="listing[location]" placeholder="enter location" type="text">
-         <br><br>
-         <button>ADD</button>
+<% layout('/layouts/boilerplate') -%>
 
+<!-- Header Section -->
+<div class="relative z-10 pt-28 px-4">
+  <div class="max-w-5xl mx-auto mb-8">
+    <a href="/listings" class="inline-flex items-center text-gray-300 hover:text-white transition-colors duration-300 group mb-6">
+      <i class="fas fa-arrow-left mr-2 group-hover:-translate-x-1 transition-transform"></i>
+      Back to Listings
+    </a>
+    
+    <!-- Hero Header -->
+    <div class="text-center mb-8">
+      <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-purple-500 to-pink-500 rounded-3xl mb-6 shadow-2xl">
+        <i class="fas fa-home text-white text-4xl"></i>
+      </div>
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
+        Create Your Listing
+      </h1>
+      <p class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto">
+        Share your space with travelers from around the world
+      </p>
+    </div>
+
+    <!-- Progress Steps -->
+    <div class="flex items-center justify-center gap-2 mb-8">
+      <div class="flex items-center">
+        <div class="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center text-white font-bold shadow-lg">1</div>
+        <span class="ml-2 text-white font-medium hidden sm:inline">Details</span>
+      </div>
+      <div class="w-12 md:w-20 h-1 bg-gray-700 rounded"></div>
+      <div class="flex items-center">
+        <div class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center text-gray-400 font-bold">2</div>
+        <span class="ml-2 text-gray-400 font-medium hidden sm:inline">Photos</span>
+      </div>
+      <div class="w-12 md:w-20 h-1 bg-gray-700 rounded"></div>
+      <div class="flex items-center">
+        <div class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center text-gray-400 font-bold">3</div>
+        <span class="ml-2 text-gray-400 font-medium hidden sm:inline">Publish</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Main Form -->
+<div class="relative z-10 px-4 pb-16">
+  <div class="max-w-5xl mx-auto">
+    <form method="POST" action="/listings" class="space-y-6" id="listingForm">
+      
+      <!-- Section 1: Basic Information -->
+      <div class="bg-gray-800/50 backdrop-blur-lg rounded-3xl p-6 md:p-8 shadow-xl border border-gray-700/50 hover:border-purple-500/50 transition-all duration-300">
+        <div class="flex items-center mb-6">
+          <div class="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center mr-4">
+            <i class="fas fa-info-circle text-purple-400 text-xl"></i>
+          </div>
+          <div>
+            <h2 class="text-2xl font-bold text-white">Basic Information</h2>
+            <p class="text-gray-400 text-sm">Tell us about your property</p>
+          </div>
+        </div>
+
+        <div class="space-y-5">
+          <!-- Title -->
+          <div>
+            <label class="flex items-center text-white font-semibold mb-2">
+              <i class="fas fa-heading text-purple-400 mr-2"></i>
+              Property Title
+              <span class="text-red-400 ml-1">*</span>
+            </label>
+            <input 
+              name="listing[title]" 
+              placeholder="e.g., Luxury Villa with Ocean View" 
+              type="text"
+              required
+              maxlength="100"
+              class="w-full bg-gray-900/50 border-2 border-gray-700 rounded-xl px-4 py-4 text-white placeholder-gray-500 outline-none focus:border-purple-500 focus:ring-4 focus:ring-purple-500/20 transition-all duration-300"
+              id="titleInput"
+            />
+            <div class="flex justify-between mt-2">
+              <p class="text-gray-500 text-sm">Make it catchy and descriptive</p>
+              <p class="text-gray-400 text-sm"><span id="titleCount">0</span>/100</p>
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div>
+            <label class="flex items-center text-white font-semibold mb-2">
+              <i class="fas fa-align-left text-pink-400 mr-2"></i>
+              Description
+              <span class="text-red-400 ml-1">*</span>
+            </label>
+            <textarea 
+              name="listing[description]" 
+              placeholder="Describe your property, its unique features, nearby attractions..."
+              required
+              rows="5"
+              maxlength="1000"
+              class="w-full bg-gray-900/50 border-2 border-gray-700 rounded-xl px-4 py-4 text-white placeholder-gray-500 outline-none focus:border-pink-500 focus:ring-4 focus:ring-pink-500/20 transition-all duration-300 resize-none"
+              id="descInput"
+            ></textarea>
+            <div class="flex justify-between mt-2">
+              <p class="text-gray-500 text-sm">Minimum 50 characters recommended</p>
+              <p class="text-gray-400 text-sm"><span id="descCount">0</span>/1000</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 2: Photos & Media -->
+      <div class="bg-gray-800/50 backdrop-blur-lg rounded-3xl p-6 md:p-8 shadow-xl border border-gray-700/50 hover:border-purple-500/50 transition-all duration-300">
+        <div class="flex items-center mb-6">
+          <div class="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center mr-4">
+            <i class="fas fa-camera text-blue-400 text-xl"></i>
+          </div>
+          <div>
+            <h2 class="text-2xl font-bold text-white">Photos & Media</h2>
+            <p class="text-gray-400 text-sm">Add stunning visuals</p>
+          </div>
+        </div>
+
+        <!-- Image URL -->
+        <div>
+          <label class="flex items-center text-white font-semibold mb-2">
+            <i class="fas fa-image text-blue-400 mr-2"></i>
+            Image URL
+            
+          </label>
+          <input 
+            name="listing[image]" 
+            placeholder="https://example.com/image.jpg" 
+            type="url"
+            class="w-full bg-gray-900/50 border-2 border-gray-700 rounded-xl px-4 py-4 text-white placeholder-gray-500 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 transition-all duration-300"
+            id="imageInput"
+          />
+          <p class="text-gray-500 text-sm mt-2">Use high-quality images (1920x1080 recommended)</p>
+        </div>
+
+        <!-- Image Preview -->
+        <div id="imagePreview" class="hidden mt-4">
+          <p class="text-gray-400 text-sm mb-2 font-semibold">Preview:</p>
+          <div class="relative rounded-2xl overflow-hidden w-full h-64 bg-gray-900/50 border-2 border-gray-700">
+            <img id="previewImg" src="" alt="Preview" class="w-full h-full object-cover" />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+            <div class="absolute bottom-4 left-4 right-4">
+              <div class="flex items-center justify-between">
+                <span class="bg-green-500 text-white text-xs px-3 py-1 rounded-full font-semibold">
+                  <i class="fas fa-check mr-1"></i>Image Loaded
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 3: Location -->
+      <div class="bg-gray-800/50 backdrop-blur-lg rounded-3xl p-6 md:p-8 shadow-xl border border-gray-700/50 hover:border-purple-500/50 transition-all duration-300">
+        <div class="flex items-center mb-6">
+          <div class="w-12 h-12 bg-red-500/20 rounded-xl flex items-center justify-center mr-4">
+            <i class="fas fa-map-marker-alt text-red-400 text-xl"></i>
+          </div>
+          <div>
+            <h2 class="text-2xl font-bold text-white">Location</h2>
+            <p class="text-gray-400 text-sm">Where is your property?</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <!-- Country -->
+          <div>
+            <label class="flex items-center text-white font-semibold mb-2">
+              <i class="fas fa-globe text-cyan-400 mr-2"></i>
+              Country
+              <span class="text-red-400 ml-1">*</span>
+            </label>
+            <input 
+              name="listing[country]" 
+              placeholder="e.g., India, Thailand, Bali" 
+              type="text"
+              required
+              class="w-full bg-gray-900/50 border-2 border-gray-700 rounded-xl px-4 py-4 text-white placeholder-gray-500 outline-none focus:border-cyan-500 focus:ring-4 focus:ring-cyan-500/20 transition-all duration-300"
+            />
+          </div>
+
+          <!-- Location/City -->
+          <div>
+            <label class="flex items-center text-white font-semibold mb-2">
+              <i class="fas fa-city text-orange-400 mr-2"></i>
+              City / Location
+              <span class="text-red-400 ml-1">*</span>
+            </label>
+            <input 
+              name="listing[location]" 
+              placeholder="e.g., Mumbai, Phuket, Seminyak" 
+              type="text"
+              required
+              class="w-full bg-gray-900/50 border-2 border-gray-700 rounded-xl px-4 py-4 text-white placeholder-gray-500 outline-none focus:border-orange-500 focus:ring-4 focus:ring-orange-500/20 transition-all duration-300"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 4: Pricing -->
+      <div class="bg-gray-800/50 backdrop-blur-lg rounded-3xl p-6 md:p-8 shadow-xl border border-gray-700/50 hover:border-purple-500/50 transition-all duration-300">
+        <div class="flex items-center mb-6">
+          <div class="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center mr-4">
+            <i class="fas fa-dollar-sign text-green-400 text-xl"></i>
+          </div>
+          <div>
+            <h2 class="text-2xl font-bold text-white">Pricing</h2>
+            <p class="text-gray-400 text-sm">Set your nightly rate</p>
+          </div>
+        </div>
+
+        <div>
+          <label class="flex items-center text-white font-semibold mb-2">
+            <i class="fas fa-rupee-sign text-green-400 mr-2"></i>
+            Price per Night
+            <span class="text-red-400 ml-1">*</span>
+          </label>
+          <div class="relative">
+            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-xl">₹</span>
+            <input 
+              name="listing[price]" 
+              placeholder="5000" 
+              
+              required
+              min="1"
+              step="1"
+              class="w-full bg-gray-900/50 border-2 border-gray-700 rounded-xl pl-10 pr-4 py-4 text-white placeholder-gray-500 outline-none focus:border-green-500 focus:ring-4 focus:ring-green-500/20 transition-all duration-300"
+              id="priceInput"
+            />
+          </div>
+          <div class="mt-3 p-4 bg-gray-900/50 rounded-xl border border-gray-700">
+            <div class="flex justify-between items-center">
+              <span class="text-gray-400">Formatted Price:</span>
+              <span id="priceFormatted" class="text-2xl font-bold text-white">₹0</span>
+            </div>
+            <p class="text-gray-500 text-xs mt-2">Guests will see this price per night</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit Buttons -->
+      <div class="flex flex-col sm:flex-row gap-4">
+        <button 
+          type="submit"
+          class="flex-1 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold py-5 rounded-2xl transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/50 flex items-center justify-center gap-3 text-lg"
+          id="submitBtn"
+        >
+          <i class="fas fa-check-circle text-2xl"></i>
+          Create Listing
+        </button>
+        
+        <a href="/listings" class="flex-1">
+          <button 
+            type="button"
+            class="w-full bg-gray-800 hover:bg-gray-700 text-white font-semibold py-5 rounded-2xl transition-all duration-300 border-2 border-gray-700 hover:border-gray-600 flex items-center justify-center gap-2 text-lg"
+          >
+            <i class="fas fa-times"></i>
+            Cancel
+          </button>
+        </a>
+      </div>
+
+      <!-- Help Section -->
+      <div class="bg-gradient-to-r from-blue-900/30 to-purple-900/30 backdrop-blur-lg rounded-2xl p-6 border border-blue-500/30">
+        <div class="flex items-start gap-4">
+          <div class="w-12 h-12 bg-blue-500/20 rounded-full flex items-center justify-center flex-shrink-0">
+            <i class="fas fa-question-circle text-blue-400 text-xl"></i>
+          </div>
+          <div>
+            <h3 class="text-white font-bold text-lg mb-2">Need Help?</h3>
+            <p class="text-gray-300 text-sm mb-3">
+              Creating your first listing? Here are some tips to make it stand out:
+            </p>
+            <ul class="text-gray-300 space-y-2 text-sm">
+              <li class="flex items-start gap-2">
+                <i class="fas fa-star text-yellow-400 mt-0.5"></i>
+                <span>Use professional, well-lit photos showing your property's best angles</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="fas fa-star text-yellow-400 mt-0.5"></i>
+                <span>Write detailed descriptions highlighting unique features and amenities</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="fas fa-star text-yellow-400 mt-0.5"></i>
+                <span>Research competitive pricing in your area for similar properties</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
 
     </form>
-</body>
-</html>
+  </div>
+</div>
+
+<script>
+  
+</script>
+
+<!-- <style>
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+  
+  textarea::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  textarea::-webkit-scrollbar-track {
+    background: rgba(31, 41, 55, 0.5);
+    border-radius: 10px;
+  }
+  
+  textarea::-webkit-scrollbar-thumb {
+    background: rgba(168, 85, 247, 0.5);
+    border-radius: 10px;
+  }
+  
+  textarea::-webkit-scrollbar-thumb:hover {
+    background: rgba(168, 85, 247, 0.7);
+  }
+</style> -->

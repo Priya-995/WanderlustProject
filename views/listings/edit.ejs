@@ -1,20 +1,214 @@
 <% layout('/layouts/boilerplate') -%>
-    <h1>Edit your Listing</h1>
-    <form method="POST" action="/listings/<%= listing.id %>?_method=PUT">
-        <input name="listing[title]" value="<%=listing.title%>" type="text">
-        <br>
-        <textarea name="listing[description]"  type="text"><%=listing.description%></textarea>
-         <br>
-        <input name="listing[image]" value="<%=listing.image%>" type="text">
-         <br><br>
-        <input name="listing[price]" value="<%=listing.price%>" type="number">
-           <br><br>
-        <input name="listing[country]" value="<%=listing.country%>" type="text">
-           <br><br>
-        <input name="listing[location]" value="<%=listing.location%>" type="text">
-         <br><br>
-         <button>EDIT</button>
 
+<!-- Header Section -->
+<div class="relative z-10 pt-28 px-4">
+  <div class="max-w-4xl mx-auto mb-6">
+    <a href="/listings/<%= listing.id %>" class="inline-flex items-center text-gray-300 hover:text-white transition-colors duration-300 group mb-6">
+      <i class="fas fa-arrow-left mr-2 group-hover:-translate-x-1 transition-transform"></i>
+      Back to Listing
+    </a>
+    
+    <div class="text-center mb-8">
+      <h1 class="text-4xl md:text-5xl font-bold text-white mb-3 bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
+        Edit Your Listing
+      </h1>
+      <p class="text-gray-400 text-lg">Update your property details to attract more guests</p>
+    </div>
+  </div>
+</div>
+
+<!-- Main Form -->
+<div class="relative z-10 px-4 pb-16">
+  <div class="max-w-4xl mx-auto">
+    <form method="POST" action="/listings/<%= listing.id %>?_method=PUT" class="space-y-6">
+      
+      <!-- Title Section -->
+      <div class="bg-gray-800/50 backdrop-blur-lg rounded-3xl p-6 md:p-8 shadow-xl border border-gray-700/50 hover:border-purple-500/50 transition-all duration-300">
+        <label class="block mb-3">
+          <div class="flex items-center text-white text-lg font-semibold mb-2">
+            <i class="fas fa-heading text-purple-400 mr-3"></i>
+            Property Title
+          </div>
+          <input 
+            name="listing[title]" 
+            value="<%= listing.title %>" 
+            type="text" 
+            required
+            maxlength="100"
+            placeholder="e.g., Cozy Beachfront Cottage with Ocean Views"
+            class="w-full bg-gray-900/50 border border-gray-700 rounded-xl px-4 py-3.5 text-white placeholder-gray-500 outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all duration-300"
+          />
+          <p class="text-gray-400 text-sm mt-2">
+            <span id="titleCount">0</span>/100 characters
+          </p>
+        </label>
+      </div>
+
+      <!-- Description Section -->
+      <div class="bg-gray-800/50 backdrop-blur-lg rounded-3xl p-6 md:p-8 shadow-xl border border-gray-700/50 hover:border-purple-500/50 transition-all duration-300">
+        <label class="block mb-3">
+          <div class="flex items-center text-white text-lg font-semibold mb-2">
+            <i class="fas fa-align-left text-pink-400 mr-3"></i>
+            Description
+          </div>
+          <textarea 
+            name="listing[description]" 
+            type="text" 
+            required
+            rows="6"
+            maxlength="1000"
+            placeholder="Describe your property, its features, nearby attractions, and what makes it special..."
+            class="w-full bg-gray-900/50 border border-gray-700 rounded-xl px-4 py-3.5 text-white placeholder-gray-500 outline-none focus:border-pink-500 focus:ring-2 focus:ring-pink-500/20 transition-all duration-300 resize-none"
+          ><%= listing.description %></textarea>
+          <p class="text-gray-400 text-sm mt-2">
+            <span id="descCount">0</span>/1000 characters
+          </p>
+        </label>
+      </div>
+
+      <!-- Image URL Section -->
+      <div class="bg-gray-800/50 backdrop-blur-lg rounded-3xl p-6 md:p-8 shadow-xl border border-gray-700/50 hover:border-purple-500/50 transition-all duration-300">
+        <label class="block mb-3">
+          <div class="flex items-center text-white text-lg font-semibold mb-2">
+            <i class="fas fa-image text-blue-400 mr-3"></i>
+            Image URL
+          </div>
+          <input 
+            name="listing[image]" 
+            value="<%= listing.image.url %>" 
+            type="url" 
+             required
+            placeholder="https://example.com/image.jpg"
+            class="w-full bg-gray-900/50 border border-gray-700 rounded-xl px-4 py-3.5 text-white placeholder-gray-500 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-300"
+            id="imageInput"
+          />
+          <p class="text-gray-400 text-sm mt-2">Enter a valid image URL</p>
+        </label>
+        
+        <!-- Image Preview -->
+        <div class="mt-4">
+          <div id="imagePreview" class="">
+            <p class="text-gray-400 text-sm mb-2">Preview:</p>
+            <div class="relative rounded-xl overflow-hidden w-full h-48 bg-gray-900/50">
+              <img id="previewImg" src="" alt="Preview" class="w-full h-full object-cover" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Price & Location Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        
+        <!-- Price Section -->
+        <div class="bg-gray-800/50 backdrop-blur-lg rounded-3xl p-6 md:p-8 shadow-xl border border-gray-700/50 hover:border-purple-500/50 transition-all duration-300">
+          <label class="block">
+            <div class="flex items-center text-white text-lg font-semibold mb-2">
+              <i class="fas fa-rupee-sign text-green-400 mr-3"></i>
+              Price per Night
+            </div>
+            <div class="relative">
+              <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-lg">₹</span>
+              <input 
+                name="listing[price]" 
+                value="<%= listing.price %>" 
+                type="number" 
+                 required
+                
+                placeholder="5000"
+                class="w-full bg-gray-900/50 border border-gray-700 rounded-xl pl-8 pr-4 py-3.5 text-white placeholder-gray-500 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/20 transition-all duration-300"
+                id="priceInput"
+              />
+            </div>
+            <p class="text-gray-400 text-sm mt-2">
+              Formatted: <span id="priceFormatted" class="text-white font-semibold">₹0</span>
+            </p>
+          </label>
+        </div>
+
+        <!-- Country Section -->
+        <div class="bg-gray-800/50 backdrop-blur-lg rounded-3xl p-6 md:p-8 shadow-xl border border-gray-700/50 hover:border-purple-500/50 transition-all duration-300">
+          <label class="block">
+            <div class="flex items-center text-white text-lg font-semibold mb-2">
+              <i class="fas fa-globe text-cyan-400 mr-3"></i>
+              Country
+            </div>
+            <input 
+              name="listing[country]" 
+              value="<%= listing.country %>" 
+              type="text" 
+              required
+              placeholder="e.g., India"
+              class="w-full bg-gray-900/50 border border-gray-700 rounded-xl px-4 py-3.5 text-white placeholder-gray-500 outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 transition-all duration-300"
+            />
+          </label>
+        </div>
+      </div>
+
+      <!-- Location Section -->
+      <div class="bg-gray-800/50 backdrop-blur-lg rounded-3xl p-6 md:p-8 shadow-xl border border-gray-700/50 hover:border-purple-500/50 transition-all duration-300">
+        <label class="block">
+          <div class="flex items-center text-white text-lg font-semibold mb-2">
+            <i class="fas fa-map-marker-alt text-red-400 mr-3"></i>
+            Location / City
+          </div>
+          <input 
+            name="listing[location]" 
+            value="<%= listing.location %>" 
+            type="text" 
+            required
+            placeholder="e.g., Goa, Bali Beach, Mumbai"
+            class="w-full bg-gray-900/50 border border-gray-700 rounded-xl px-4 py-3.5 text-white placeholder-gray-500 outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all duration-300"
+          />
+        </label>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex flex-col sm:flex-row gap-4 pt-4">
+        <button 
+          type="submit"
+          class="flex-1 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold py-4 rounded-2xl transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-purple-500/50 flex items-center justify-center gap-2"
+        >
+          <i class="fas fa-save"></i>
+          Save Changes
+        </button>
+        
+        <a href="/listings/<%= listing.id %>" class="flex-1">
+          <button 
+            type="button"
+            class="w-full bg-gray-800 hover:bg-gray-700 text-white font-semibold py-4 rounded-2xl transition-all duration-300 border border-gray-700 hover:border-gray-600 flex items-center justify-center gap-2"
+          >
+            <i class="fas fa-times"></i>
+            Cancel
+          </button>
+        </a>
+      </div>
+
+      <!-- Tips Section -->
+      <div class="bg-gradient-to-r from-purple-900/30 to-pink-900/30 backdrop-blur-lg rounded-2xl p-6 border border-purple-500/30">
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 bg-purple-500/20 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+            <i class="fas fa-lightbulb text-yellow-400"></i>
+          </div>
+          <div>
+            <h3 class="text-white font-semibold mb-2 text-lg">Pro Tips</h3>
+            <ul class="text-gray-300 space-y-1.5 text-sm">
+              <li class="flex items-start gap-2">
+                <i class="fas fa-check text-green-400 mt-1"></i>
+                <span>Use high-quality images that showcase your property's best features</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="fas fa-check text-green-400 mt-1"></i>
+                <span>Write detailed descriptions highlighting unique amenities and nearby attractions</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="fas fa-check text-green-400 mt-1"></i>
+                <span>Set competitive pricing based on your location and property type</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
 
     </form>
-
+  </div>
+</div>
