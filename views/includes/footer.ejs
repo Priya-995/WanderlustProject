@@ -1,2 +1,95 @@
 
-<h2>Footer</h2>
+<footer class="relative bg-gray-900/90 backdrop-blur-md text-gray-300 pt-12 pb-6 mt-20 border-t border-gray-800 shadow-inner">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8">
+    <!-- Top Section -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-10 text-center md:text-left">
+
+      <!-- Logo & Description -->
+      <div>
+        <div class="flex items-center justify-center md:justify-start space-x-3 mb-4 cursor-pointer hover:scale-105 transition-transform duration-300">
+          <i class="fas fa-globe-americas text-4xl bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent"></i>
+          <span class="text-white text-2xl font-bold tracking-wide">Wanderlust</span>
+        </div>
+        <p class="text-gray-400 text-sm leading-relaxed">
+          Discover unique stays and experiences across the globe.  
+          Work, travel, and unwind with Wanderlust — your adventure starts here.
+        </p>
+      </div>
+
+      <!-- Explore -->
+      <div>
+        <h3 class="text-white text-lg font-semibold mb-4 border-b border-purple-500/50 inline-block pb-1">
+          Explore
+        </h3>
+        <ul class="space-y-2">
+          <li><a href="/" class="hover:text-purple-400 transition-colors duration-300">Home</a></li>
+          <li><a href="/experiences" class="hover:text-purple-400 transition-colors duration-300">Experiences</a></li>
+          <li><a href="/online" class="hover:text-purple-400 transition-colors duration-300">Online Adventures</a></li>
+          <li><a href="/become-host" class="hover:text-purple-400 transition-colors duration-300">Become a Host</a></li>
+        </ul>
+      </div>
+
+      <!-- Community -->
+      <div>
+        <h3 class="text-white text-lg font-semibold mb-4 border-b border-pink-500/50 inline-block pb-1">
+          Community
+        </h3>
+        <ul class="space-y-2">
+          <li><a href="#" class="hover:text-pink-400 transition-colors duration-300">Diversity & Inclusion</a></li>
+          <li><a href="#" class="hover:text-pink-400 transition-colors duration-300">Accessibility</a></li>
+          <li><a href="#" class="hover:text-pink-400 transition-colors duration-300">Wanderlust Magazine</a></li>
+          <li><a href="#" class="hover:text-pink-400 transition-colors duration-300">Support</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact -->
+      <div>
+        <h3 class="text-white text-lg font-semibold mb-4 border-b border-purple-400/50 inline-block pb-1">
+          Connect
+        </h3>
+        <p class="text-sm text-gray-400 mb-4">Stay in touch with us through our social platforms</p>
+
+        <!-- Social Media Icons -->
+        <div class="flex justify-center md:justify-start space-x-4">
+          <% const socials = [
+              { icon: 'fa-facebook-f', color: 'hover:text-blue-400', link: '#' },
+              { icon: 'fa-twitter', color: 'hover:text-sky-400', link: '#' },
+              { icon: 'fa-instagram', color: 'hover:text-pink-500', link: '#' },
+              { icon: 'fa-linkedin-in', color: 'hover:text-blue-500', link: '#' },
+              { icon: 'fa-youtube', color: 'hover:text-red-500', link: '#' }
+          ]; %>
+
+          <% socials.forEach(s => { %>
+            <a href="<%= s.link %>" target="_blank"
+               class="p-3 bg-gray-800/70 rounded-full shadow-md hover:shadow-purple-500/40 transition-all duration-300 hover:scale-110 <%= s.color %>">
+              <i class="fab <%= s.icon %> text-lg"></i>
+            </a>
+          <% }); %>
+        </div>
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <div class="border-t border-gray-700/70 my-6"></div>
+
+    <!-- Bottom Section -->
+    <div class="flex flex-col md:flex-row justify-between items-center text-sm space-y-3 md:space-y-0">
+      <p class="text-gray-400">
+        &copy; <%= new Date().getFullYear() %> Wanderlust. All rights reserved.
+      </p>
+      <div class="flex space-x-4">
+        <a href="#" class="hover:text-purple-400 transition-colors duration-300">Privacy Policy</a>
+        <a href="#" class="hover:text-purple-400 transition-colors duration-300">Terms of Service</a>
+        <a href="#" class="hover:text-purple-400 transition-colors duration-300">Sitemap</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Scroll-to-Top Button -->
+  <button id="scrollTopBtn"
+          class="fixed bottom-6 right-6 bg-gradient-to-r from-purple-500 to-pink-500 text-white p-3 rounded-full shadow-lg hover:scale-110 hover:shadow-purple-500/40 transition-all duration-300 hidden">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+</footer>
+
+

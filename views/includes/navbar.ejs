@@ -1,2 +1,68 @@
+<body
+  class="bg-gradient-to-br from-gray-900 via-black to-gray-950 min-h-screen relative overflow-x-hidden"
+>
+  <canvas id="particles-canvas" class="absolute inset-0 z-0"></canvas>
 
-<h1>Navbar</h1>
+  
+  <!-- Navbar -->
+  <nav id="navbar" class="fixed top-4 left-4 right-4 sm:top-6 sm:left-1/2 sm:right-auto sm:transform sm:-translate-x-1/2 rounded-full z-50 bg-gray-800/70 backdrop-blur-lg shadow-lg transition-all duration-300 sm:w-fit w-auto">
+    <div class="px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center py-3 sm:py-4">
+        <!-- Logo -->
+        <div class="flex items-center cursor-pointer hover:scale-105 transition-transform duration-300">
+          <i class="fas fa-globe-americas text-2xl sm:text-3xl lg:text-4xl bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent"></i>
+        </div>
+
+        <!-- Desktop Nav Links (hidden on mobile/tablet) -->
+        <div class="hidden lg:flex items-center space-x-6 xl:space-x-8 mx-6">
+          <a href="/listings" class="nav-link text-gray-300 hover:text-white transition-colors duration-300 font-medium whitespace-nowrap">Home</a>
+          <a href="/experiences" class="nav-link text-gray-300 hover:text-white transition-colors duration-300 font-medium whitespace-nowrap">Add new Listing</a>
+          <a href="/online" class="nav-link text-gray-300 hover:text-white transition-colors duration-300 font-medium whitespace-nowrap">Online</a>
+        </div>
+
+        <!-- Desktop Search Bar (hidden on mobile/tablet) -->
+        <div class="hidden lg:flex items-center bg-gray-800/80 rounded-full px-4 xl:px-5 py-2 space-x-3 shadow-md hover:shadow-purple-500/30 transition-all duration-300 w-64 xl:w-80">
+          <i class="fas fa-search text-purple-400"></i>
+          <input type="text" placeholder="Where are you going?" class="bg-transparent text-white placeholder-gray-400 outline-none flex-1 text-sm" />
+          <button class="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white rounded-full px-3 xl:px-4 py-2 text-sm font-medium transition-all duration-300">Search</button>
+        </div>
+
+        <!-- User Menu (hidden on mobile) -->
+        <div class="hidden sm:flex items-center space-x-3 ml-4 lg:ml-6 bg-gray-800 hover:bg-gray-700 rounded-full px-3 sm:px-4 py-2 cursor-pointer transition-all duration-300 shadow-lg hover:shadow-purple-500/50">
+          <i class="fas fa-bars text-gray-300 text-sm"></i>
+          <div class="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
+            <i class="fas fa-user text-white text-xs sm:text-sm"></i>
+          </div>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <button id="mobile-menu-btn" class="sm:hidden text-white text-xl focus:outline-none ml-4">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+
+      <!-- Mobile/Tablet Search Bar -->
+      <div class="lg:hidden pb-3 pt-1">
+        <div class="flex items-center bg-gray-800/80 rounded-full px-4 py-2.5 space-x-3">
+          <i class="fas fa-search text-purple-400 text-sm"></i>
+          <input type="text" placeholder="Where are you going?" class="bg-transparent text-white placeholder-gray-400 outline-none flex-1 text-sm" />
+          <button class="bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium">Search</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Menu Dropdown -->
+    <div id="mobile-menu" class="hidden rounded-b-3xl overflow-hidden">
+      <div class="bg-gray-800/95 backdrop-blur-lg border-t border-gray-700 px-4 py-5 space-y-2">
+        <a href="/listings" class="block text-gray-300 hover:text-white hover:bg-gray-700 rounded-lg px-4 py-3 transition-all duration-300 font-medium">Home</a>
+        <a href="/experiences" class="block text-gray-300 hover:text-white hover:bg-gray-700 rounded-lg px-4 py-3 transition-all duration-300 font-medium">Experiences</a>
+        <a href="/online" class="block text-gray-300 hover:text-white hover:bg-gray-700 rounded-lg px-4 py-3 transition-all duration-300 font-medium">Online</a>
+        <a href="/become-host" class="block text-gray-300 hover:text-white hover:bg-gray-700 rounded-lg px-4 py-3 transition-all duration-300 font-medium">Become a Host</a>
+        <hr class="border-gray-700 my-3" />
+        <a href="/login" class="block text-gray-300 hover:text-white hover:bg-gray-700 rounded-lg px-4 py-3 transition-all duration-300 font-medium">Log in</a>
+        <a href="/signup" class="block text-gray-300 hover:text-white hover:bg-gray-700 rounded-lg px-4 py-3 transition-all duration-300 font-medium">Sign up</a>
+      </div>
+    </div>
+  </nav>
+</body>
+ 

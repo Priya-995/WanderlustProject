@@ -1,23 +1,252 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h3>Listing details</h3>
-        <ul>
-            <li><%= listing.title  %></li>
-            <li><%= listing.description %></li>
-             <li>&#8377;<%= listing.price.toLocaleString("en-IN") %></li>
-              <li><%= listing.location%></li>
-              <li><%= listing.country%></li>
-        </ul>
-    <a href="/listings/<%=listing.id%>/edit">Edit</a>
-    <br/><br/><br/>
-    <form method="POST" action="/listings/<%= listing.id %>?_method=DELETE">
-        <button>DELETE</button>
-    </form>
-</body>
-</html>
+<% layout('/layouts/boilerplate') -%>
+
+<!-- Back Button -->
+<div class="relative z-10 pt-28 px-4">
+  <div class="max-w-6xl mx-auto mb-6">
+    <a href="/listings" class="inline-flex items-center text-gray-300 hover:text-white transition-colors duration-300 group">
+      <i class="fas fa-arrow-left mr-2 group-hover:-translate-x-1 transition-transform"></i>
+      Back to Listings
+    </a>
+  </div>
+</div>
+
+<!-- Main Content -->
+<div class="relative z-10 px-4 pb-16">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      
+      <!-- Left Column - Image & Gallery -->
+      <div class="lg:col-span-2">
+        <!-- Main Image -->
+        <div class="relative rounded-3xl overflow-hidden shadow-2xl group mb-6">
+          <img 
+            id="mainImage"
+            src="<%= listing.image.url %>" 
+            alt="<%= listing.title %>" 
+            class="w-full h-96 lg:h-[500px] object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+          <!-- Overlay Gradient -->
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+          
+          <!-- Floating Action Buttons -->
+          <div class="absolute top-6 right-6 flex gap-3">
+            <button class="w-12 h-12 bg-black/40 hover:bg-black/60 backdrop-blur-md rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-lg" id="shareBtn">
+              <i class="fas fa-share-alt text-white"></i>
+            </button>
+            <button class="w-12 h-12 bg-black/40 hover:bg-pink-500 backdrop-blur-md rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-lg" id="wishlistBtn">
+              <i class="far fa-heart text-white"></i>
+            </button>
+          </div>
+
+          <!-- Image Counter Badge -->
+          <div class="absolute bottom-6 right-6 bg-black/60 backdrop-blur-md px-4 py-2 rounded-full text-white text-sm font-medium">
+            <i class="fas fa-images mr-2"></i>1 / 1
+          </div>
+        </div>
+
+        <!-- Property Details Card -->
+        <div class="bg-gray-800/50 backdrop-blur-lg rounded-3xl p-8 shadow-xl border border-gray-700/50">
+          <h1 class="text-3xl md:text-4xl font-bold text-white mb-4 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+            <%= listing.title %>
+          </h1>
+          
+          <!-- Location -->
+          <div class="flex items-center text-gray-300 mb-6 text-lg">
+            <i class="fas fa-map-marker-alt text-pink-400 mr-3"></i>
+            <span><%= listing.location %>, <%= listing.country %></span>
+          </div>
+
+          <!-- Description Section -->
+          <div class="mb-8">
+            <h2 class="text-xl font-semibold text-white mb-3 flex items-center">
+              <i class="fas fa-info-circle text-purple-400 mr-2"></i>
+              About this place
+            </h2>
+            <p class="text-gray-300 leading-relaxed text-base">
+              <%= listing.description %>
+            </p>
+          </div>
+
+          <!-- Features Grid -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <div class="bg-gray-700/50 rounded-2xl p-4 text-center hover:bg-gray-700/70 transition-all duration-300 hover:scale-105 cursor-pointer">
+              <i class="fas fa-bed text-purple-400 text-2xl mb-2"></i>
+              <p class="text-white text-sm font-medium">Bedrooms</p>
+              <p class="text-gray-400 text-xs">2 beds</p>
+            </div>
+            <div class="bg-gray-700/50 rounded-2xl p-4 text-center hover:bg-gray-700/70 transition-all duration-300 hover:scale-105 cursor-pointer">
+              <i class="fas fa-bath text-pink-400 text-2xl mb-2"></i>
+              <p class="text-white text-sm font-medium">Bathrooms</p>
+              <p class="text-gray-400 text-xs">1 bath</p>
+            </div>
+            <div class="bg-gray-700/50 rounded-2xl p-4 text-center hover:bg-gray-700/70 transition-all duration-300 hover:scale-105 cursor-pointer">
+              <i class="fas fa-users text-blue-400 text-2xl mb-2"></i>
+              <p class="text-white text-sm font-medium">Guests</p>
+              <p class="text-gray-400 text-xs">4 guests</p>
+            </div>
+            <div class="bg-gray-700/50 rounded-2xl p-4 text-center hover:bg-gray-700/70 transition-all duration-300 hover:scale-105 cursor-pointer">
+              <i class="fas fa-wifi text-green-400 text-2xl mb-2"></i>
+              <p class="text-white text-sm font-medium">Wifi</p>
+              <p class="text-gray-400 text-xs">Free</p>
+            </div>
+          </div>
+
+          <!-- Amenities -->
+          <div class="border-t border-gray-700 pt-6">
+            <h2 class="text-xl font-semibold text-white mb-4 flex items-center">
+              <i class="fas fa-check-circle text-purple-400 mr-2"></i>
+              What this place offers
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div class="flex items-center text-gray-300 hover:text-white transition-colors">
+                <i class="fas fa-snowflake text-blue-400 w-6 mr-3"></i>
+                <span>Air conditioning</span>
+              </div>
+              <div class="flex items-center text-gray-300 hover:text-white transition-colors">
+                <i class="fas fa-parking text-purple-400 w-6 mr-3"></i>
+                <span>Free parking</span>
+              </div>
+              <div class="flex items-center text-gray-300 hover:text-white transition-colors">
+                <i class="fas fa-swimming-pool text-cyan-400 w-6 mr-3"></i>
+                <span>Pool</span>
+              </div>
+              <div class="flex items-center text-gray-300 hover:text-white transition-colors">
+                <i class="fas fa-utensils text-orange-400 w-6 mr-3"></i>
+                <span>Kitchen</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column - Booking Card -->
+      <div class="lg:col-span-1">
+        <!-- Sticky Booking Card -->
+        <div class="sticky top-28">
+          <!-- Price Card -->
+          <div class="bg-gradient-to-br from-purple-900/50 to-pink-900/50 backdrop-blur-lg rounded-3xl p-6 shadow-2xl border border-purple-500/30 mb-6">
+            <div class="flex items-baseline justify-between mb-6">
+              <div>
+                <span class="text-4xl font-bold text-white">₹<%= listing.price.toLocaleString("en-IN") %></span>
+                <span class="text-gray-300 ml-2">/ night</span>
+              </div>
+              <div class="flex items-center bg-yellow-500/20 px-3 py-1 rounded-full">
+                <i class="fas fa-star text-yellow-400 text-sm mr-1"></i>
+                <span class="text-white font-semibold text-sm">4.9</span>
+              </div>
+            </div>
+
+            <!-- Check-in/out -->
+            <div class="bg-gray-800/50 rounded-2xl p-4 mb-4 border border-gray-700">
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label class="text-gray-400 text-xs uppercase mb-1 block">Check-in</label>
+                  <input type="date" class="bg-transparent text-white text-sm outline-none w-full cursor-pointer" />
+                </div>
+                <div class="border-l border-gray-700 pl-4">
+                  <label class="text-gray-400 text-xs uppercase mb-1 block">Checkout</label>
+                  <input type="date" class="bg-transparent text-white text-sm outline-none w-full cursor-pointer" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Guests Selector -->
+            <div class="bg-gray-800/50 rounded-2xl p-4 mb-6 border border-gray-700">
+              <label class="text-gray-400 text-xs uppercase mb-2 block">Guests</label>
+              <div class="flex items-center justify-between">
+                <button class="w-10 h-10 bg-gray-700 hover:bg-gray-600 rounded-full flex items-center justify-center transition-colors" id="decreaseGuests">
+                  <i class="fas fa-minus text-white text-sm"></i>
+                </button>
+                <span class="text-white text-lg font-semibold" id="guestCount">2</span>
+                <button class="w-10 h-10 bg-gray-700 hover:bg-gray-600 rounded-full flex items-center justify-center transition-colors" id="increaseGuests">
+                  <i class="fas fa-plus text-white text-sm"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Reserve Button -->
+            <button class="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold py-4 rounded-2xl transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-purple-500/50 mb-4">
+              Reserve
+            </button>
+            <p class="text-center text-gray-400 text-sm mb-4">You won't be charged yet</p>
+
+            <!-- Price Breakdown -->
+            <div class="space-y-3 pt-4 border-t border-gray-700">
+              <div class="flex justify-between text-gray-300">
+                <span>₹<%= listing.price.toLocaleString("en-IN") %> × 5 nights</span>
+                <span>₹<%= (listing.price * 5).toLocaleString("en-IN") %></span>
+              </div>
+              <div class="flex justify-between text-gray-300">
+                <span>Service fee</span>
+                <span>₹<%= Math.round(listing.price * 0.15).toLocaleString("en-IN") %></span>
+              </div>
+              <div class="flex justify-between text-white font-bold text-lg pt-3 border-t border-gray-700">
+                <span>Total</span>
+                <span>₹<%= (listing.price * 5 + Math.round(listing.price * 0.15)).toLocaleString("en-IN") %></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="space-y-3">
+            <a href="/listings/<%= listing.id %>/edit" class="block">
+              <button class="w-full bg-gray-800 hover:bg-gray-700 text-white font-semibold py-3 rounded-2xl transition-all duration-300 border border-gray-700 hover:border-purple-500 flex items-center justify-center gap-2">
+                <i class="fas fa-edit"></i>
+                Edit Listing
+              </button>
+            </a>
+            <form method="POST" action="/listings/<%= listing.id %>?_method=DELETE" class="flex-1">
+        <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-3 rounded-xl transition-all duration-300">
+          Delete
+        </button>
+      </form>
+            
+          </div>
+
+          <!-- Contact Host -->
+          <div class="mt-6 bg-gray-800/50 backdrop-blur-lg rounded-2xl p-5 border border-gray-700">
+            <div class="flex items-center mb-3">
+              <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mr-3">
+                <i class="fas fa-user text-white"></i>
+              </div>
+              <div>
+                <p class="text-white font-semibold">Hosted by Owner</p>
+                <p class="text-gray-400 text-sm">Superhost · 2 years hosting</p>
+              </div>
+            </div>
+            <button class="w-full bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2.5 rounded-xl transition-all duration-300">
+              Contact Host
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Confirmation Modal
+<div id="deleteModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+  <div class="bg-gray-800 rounded-3xl p-8 max-w-md w-full shadow-2xl border border-gray-700 transform transition-all scale-95" id="modalContent">
+    <div class="text-center mb-6">
+      <div class="w-16 h-16 bg-red-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+        <i class="fas fa-exclamation-triangle text-red-500 text-3xl"></i>
+      </div>
+      <h3 class="text-2xl font-bold text-white mb-2">Delete Listing?</h3>
+      <p class="text-gray-400">This action cannot be undone. Are you sure you want to delete this listing?</p>
+    </div>
+    
+    <div class="flex gap-3">
+      <button id="cancelDelete" class="flex-1 bg-gray-700 hover:bg-gray-600 text-white font-semibold py-3 rounded-xl transition-all duration-300">
+        Cancel
+      </button>
+      <form method="POST" action="/listings/<%= listing.id %>?_method=DELETE" class="flex-1">
+        <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-3 rounded-xl transition-all duration-300">
+          Delete
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+ -->
