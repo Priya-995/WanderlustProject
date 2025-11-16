@@ -20,23 +20,69 @@
           <a href="/online" class="nav-link text-gray-300 hover:text-white transition-colors duration-300 font-medium whitespace-nowrap">Online</a>
         </div>
 
-        <!-- Desktop Search Bar (hidden on mobile/tablet) -->
-        <div class="hidden lg:flex items-center bg-gray-800/80 rounded-full px-4 xl:px-5 py-2 space-x-3 shadow-md hover:shadow-purple-500/30 transition-all duration-300 w-64 xl:w-80">
-          <i class="fas fa-search text-purple-400"></i>
-          <input type="text" placeholder="Where are you going?" class="bg-transparent text-white placeholder-gray-400 outline-none flex-1 text-sm" />
-          <button class="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white rounded-full px-3 xl:px-4 py-2 text-sm font-medium transition-all duration-300">Search</button>
-        </div>
+        
+         <!-- Desktop Search Bar (hidden on mobile/tablet) -->
+        <div class="hidden lg:block relative" style="width: 450px;">
+          <div class="flex items-center bg-gray-800/80 rounded-full px-4 xl:px-5 py-2 space-x-3 shadow-md hover:shadow-purple-500/30 transition-all duration-300">
+            <i class="fas fa-search text-purple-400"></i>
+            <input 
+              type="text" 
+              id="desktop-search-input"
+              placeholder="Search by name, country, category..." 
+              class="bg-transparent text-white placeholder-gray-400 outline-none flex-1 text-sm" 
+            />
+            <button 
+              id="desktop-clear-btn"
+              class="hidden text-gray-400 hover:text-white transition-colors"
+            >
+              <i class="fas fa-times text-xs"></i>
+            </button>
+            <button 
+              id="desktop-search-btn"
+              class="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white rounded-full px-3 xl:px-4 py-2 text-sm font-medium transition-all duration-300"
+            >
+              Search
+            </button>
+           <!-- User Menu (hidden on mobile) -->
+<div class="relative hidden sm:flex items-center gap-1 ml-1 bg-gray-800 hover:bg-gray-700 rounded-full px-2 py-1 cursor-pointer transition-all duration-300 shadow-md hover:shadow-purple-500/50" id="user-menu">
+  <i class="fas fa-bars text-gray-300 text-xs"></i>
+  <div class="w-6 h-6 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
+    <i class="fas fa-user text-white text-xs"></i>
+  </div>
 
-        <!-- User Menu (hidden on mobile) -->
-        <div class="hidden sm:flex items-center space-x-3 ml-4 lg:ml-6 bg-gray-800 hover:bg-gray-700 rounded-full px-3 sm:px-4 py-2 cursor-pointer transition-all duration-300 shadow-lg hover:shadow-purple-500/50">
-          <i class="fas fa-bars text-gray-300 text-sm"></i>
-          <div class="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
-            <i class="fas fa-user text-white text-xs sm:text-sm"></i>
+  <!-- Dropdown (hidden by default) -->
+   <% if(!currUser){ %>
+ <div id="dropdown-menu" class="absolute right-0 top-10 w-40 bg-gray-800 rounded-xl shadow-lg border border-gray-700 hidden flex-col text-sm text-gray-200">
+
+  <button onclick="window.location.href='/login'" 
+          class="px-4 py-2 text-left hover:bg-gray-700 rounded-t-xl transition-all duration-200">
+    Login
+  </button>
+
+  <button onclick="window.location.href='/signup'" 
+          class="px-4 py-2 text-left hover:bg-gray-700 rounded-b-xl transition-all duration-200">
+    Sign Up
+  </button>
+
+</div>
+
+<% } %>
+<% if(currUser){ %>
+  <div id="dropdown-menu" class="absolute right-0 top-10 w-40 bg-gray-800 rounded-xl shadow-lg border border-gray-700 hidden flex-col text-sm text-gray-200">
+    <button onclick="window.location.href='/logout'" 
+          class="px-4 py-2 text-left hover:bg-gray-700 rounded-b-xl transition-all duration-200">
+    Log out
+  </button>
+  </div>
+<% } %>
+</div>
+
+
           </div>
-        </div>
+
 
         <!-- Mobile Menu Button -->
-        <button id="mobile-menu-btn" class="sm:hidden text-white text-xl focus:outline-none ml-4">
+        <button id="mobile-menu-btn" class="sm:hidden text-white text-xl focus:outline-none">
           <i class="fas fa-bars"></i>
         </button>
       </div>
@@ -65,4 +111,17 @@
     </div>
   </nav>
 </body>
- 
+ <!-- Script -->
+<script>
+  const userMenu = document.getElementById('user-menu');
+  const dropdown = document.getElementById('dropdown-menu');
+
+  userMenu.addEventListener('click', () => {
+    dropdown.classList.toggle('hidden');
+  });
+
+  // Optional: click outside to close
+  document.addEventListener('click', (e) => {
+    if (!userMenu.contains(e.target)) dropdown.classList.add('hidden');
+  });
+</script>
