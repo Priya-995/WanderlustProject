@@ -21,12 +21,36 @@
         <div class="relative rounded-3xl overflow-hidden shadow-2xl group mb-6">
           <img 
             id="mainImage"
-            src="<%= listing.image.url %>" 
+            src="<%= listing.image %>" 
             alt="<%= listing.title %>" 
             class="w-full h-96 lg:h-[500px] object-cover transition-transform duration-700 group-hover:scale-105"
           />
           <!-- Overlay Gradient -->
           <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+          <!-- Category Badge -->
+          <div class="absolute top-6 left-6">
+            <% 
+              let categoryIcon = 'fa-home';
+              let categoryColor = 'purple';
+              if (listing.category === 'Beachfront') {
+                categoryIcon = 'fa-umbrella-beach';
+                categoryColor = 'blue';
+              } else if (listing.category === 'Mountains') {
+                categoryIcon = 'fa-mountain';
+                categoryColor = 'green';
+              } else if (listing.category === 'Countryside') {
+                categoryIcon = 'fa-tree';
+                categoryColor = 'yellow';
+              } else if (listing.category === 'Urban') {
+                categoryIcon = 'fa-building';
+                categoryColor = 'purple';
+              }
+            %>
+            <div class="bg-<%= categoryColor %>-500/90 backdrop-blur-md px-4 py-2 rounded-full text-white font-semibold text-sm flex items-center gap-2 shadow-lg">
+              <i class="fas <%= categoryIcon %>"></i>
+              <span><%= listing.category %></span>
+            </div>
+          </div>
           
           <!-- Floating Action Buttons -->
           <div class="absolute top-6 right-6 flex gap-3">
@@ -118,111 +142,266 @@
           </div>
         </div>
       </div>
+       
+     <!-- Right Column - Booking Card -->
+<div class="lg:col-span-1">
+  <!-- Sticky Info Card -->
+  <div class="sticky top-28">
 
-      <!-- Right Column - Booking Card -->
-      <div class="lg:col-span-1">
-        <!-- Sticky Booking Card -->
-        <div class="sticky top-28">
-          <!-- Price Card -->
-          <div class="bg-gradient-to-br from-purple-900/50 to-pink-900/50 backdrop-blur-lg rounded-3xl p-6 shadow-2xl border border-purple-500/30 mb-6">
-            <div class="flex items-baseline justify-between mb-6">
-              <div>
-                <span class="text-4xl font-bold text-white">₹<%= listing.price.toLocaleString("en-IN") %></span>
-                <span class="text-gray-300 ml-2">/ night</span>
-              </div>
-              <div class="flex items-center bg-yellow-500/20 px-3 py-1 rounded-full">
-                <i class="fas fa-star text-yellow-400 text-sm mr-1"></i>
-                <span class="text-white font-semibold text-sm">4.9</span>
-              </div>
-            </div>
+    <!-- Price Card -->
+    <div class="bg-gradient-to-br from-purple-900/50 to-pink-900/50 backdrop-blur-lg rounded-3xl p-6 shadow-2xl border border-purple-500/30 mb-6">
+      <div class="flex items-baseline justify-between mb-6">
+        <div>
+          <span class="text-4xl font-bold text-white">₹<%= listing.price.toLocaleString("en-IN") %></span>
+          <span class="text-gray-300 ml-2">/ night</span>
+        </div>
+        <div class="flex items-center bg-yellow-500/20 px-3 py-1 rounded-full">
+          <i class="fas fa-star text-yellow-400 text-sm mr-1"></i>
+          <span class="text-white font-semibold text-sm">4.9</span>
+        </div>
+      </div>
 
-            <!-- Check-in/out -->
-            <div class="bg-gray-800/50 rounded-2xl p-4 mb-4 border border-gray-700">
-              <div class="grid grid-cols-2 gap-4">
-                <div>
-                  <label class="text-gray-400 text-xs uppercase mb-1 block">Check-in</label>
-                  <input type="date" class="bg-transparent text-white text-sm outline-none w-full cursor-pointer" />
-                </div>
-                <div class="border-l border-gray-700 pl-4">
-                  <label class="text-gray-400 text-xs uppercase mb-1 block">Checkout</label>
-                  <input type="date" class="bg-transparent text-white text-sm outline-none w-full cursor-pointer" />
-                </div>
-              </div>
-            </div>
+      <!-- Price Breakdown -->
+      <div class="space-y-3 pt-4 border-t border-gray-700">
+        <div class="flex justify-between text-gray-300">
+          <span>₹<%= listing.price.toLocaleString("en-IN") %> × 5 nights</span>
+          <span>₹<%= (listing.price * 5).toLocaleString("en-IN") %></span>
+        </div>
+        <div class="flex justify-between text-gray-300">
+          <span>Service fee</span>
+          <span>₹<%= Math.round(listing.price * 0.15).toLocaleString("en-IN") %></span>
+        </div>
+        <div class="flex justify-between text-white font-bold text-lg pt-3 border-t border-gray-700">
+          <span>Total</span>
+          <span>₹<%= (listing.price * 5 + Math.round(listing.price * 0.15)).toLocaleString("en-IN") %></span>
+        </div>
+      </div>
+    </div>
 
-            <!-- Guests Selector -->
-            <div class="bg-gray-800/50 rounded-2xl p-4 mb-6 border border-gray-700">
-              <label class="text-gray-400 text-xs uppercase mb-2 block">Guests</label>
-              <div class="flex items-center justify-between">
-                <button class="w-10 h-10 bg-gray-700 hover:bg-gray-600 rounded-full flex items-center justify-center transition-colors" id="decreaseGuests">
-                  <i class="fas fa-minus text-white text-sm"></i>
-                </button>
-                <span class="text-white text-lg font-semibold" id="guestCount">2</span>
-                <button class="w-10 h-10 bg-gray-700 hover:bg-gray-600 rounded-full flex items-center justify-center transition-colors" id="increaseGuests">
-                  <i class="fas fa-plus text-white text-sm"></i>
-                </button>
-              </div>
-            </div>
-
-            <!-- Reserve Button -->
-            <button class="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold py-4 rounded-2xl transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-purple-500/50 mb-4">
-              Reserve
-            </button>
-            <p class="text-center text-gray-400 text-sm mb-4">You won't be charged yet</p>
-
-            <!-- Price Breakdown -->
-            <div class="space-y-3 pt-4 border-t border-gray-700">
-              <div class="flex justify-between text-gray-300">
-                <span>₹<%= listing.price.toLocaleString("en-IN") %> × 5 nights</span>
-                <span>₹<%= (listing.price * 5).toLocaleString("en-IN") %></span>
-              </div>
-              <div class="flex justify-between text-gray-300">
-                <span>Service fee</span>
-                <span>₹<%= Math.round(listing.price * 0.15).toLocaleString("en-IN") %></span>
-              </div>
-              <div class="flex justify-between text-white font-bold text-lg pt-3 border-t border-gray-700">
-                <span>Total</span>
-                <span>₹<%= (listing.price * 5 + Math.round(listing.price * 0.15)).toLocaleString("en-IN") %></span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Action Buttons -->
-          <div class="space-y-3">
-            <a href="/listings/<%= listing.id %>/edit" class="block">
-              <button class="w-full bg-gray-800 hover:bg-gray-700 text-white font-semibold py-3 rounded-2xl transition-all duration-300 border border-gray-700 hover:border-purple-500 flex items-center justify-center gap-2">
-                <i class="fas fa-edit"></i>
-                Edit Listing
-              </button>
-            </a>
-            <form method="POST" action="/listings/<%= listing.id %>?_method=DELETE" class="flex-1">
+    <!-- Action Buttons -->
+    <div class="space-y-3">
+      <a href="/listings/<%= listing.id %>/edit" class="block">
+        <button class="w-full bg-gray-800 hover:bg-gray-700 text-white font-semibold py-3 rounded-2xl transition-all duration-300 border border-gray-700 hover:border-purple-500 flex items-center justify-center gap-2">
+          <i class="fas fa-edit"></i>
+          Edit Listing
+        </button>
+      </a>
+      <form method="POST" action="/listings/<%= listing.id %>?_method=DELETE" class="flex-1">
         <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-3 rounded-xl transition-all duration-300">
           Delete
         </button>
       </form>
-            
-          </div>
+    </div>
 
-          <!-- Contact Host -->
-          <div class="mt-6 bg-gray-800/50 backdrop-blur-lg rounded-2xl p-5 border border-gray-700">
-            <div class="flex items-center mb-3">
-              <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mr-3">
-                <i class="fas fa-user text-white"></i>
-              </div>
-              <div>
-                <p class="text-white font-semibold">Hosted by Owner</p>
-                <p class="text-gray-400 text-sm">Superhost · 2 years hosting</p>
-              </div>
-            </div>
-            <button class="w-full bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2.5 rounded-xl transition-all duration-300">
-              Contact Host
-            </button>
-          </div>
+    <!-- Contact Host -->
+    <div class="mt-6 bg-gray-800/50 backdrop-blur-lg rounded-2xl p-5 border border-gray-700">
+      <div class="flex items-center mb-3">
+        <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mr-3">
+          <i class="fas fa-user text-white"></i>
+        </div>
+        <div>
+          <p class="text-white font-semibold">Hosted by Owner</p>
+          <p class="text-gray-400 text-sm">Superhost · 2 years hosting</p>
         </div>
       </div>
+      <button class="w-full bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2.5 rounded-xl transition-all duration-300">
+        Contact Host
+      </button>
     </div>
   </div>
 </div>
+</div>
+</div>
+</div>
+
+<!-- 🌟 Review Section -->
+ <div class="max-w-6xl mx-auto mt-12 px-4">
+  <div class="bg-gray-800/50 backdrop-blur-lg rounded-3xl p-8 shadow-xl border border-gray-700/50">
+    
+    <!-- Section Header -->
+    <div class="flex items-center justify-between mb-8">
+      <div>
+        <h2 class="text-3xl font-bold text-white mb-2 flex items-center">
+          <i class="fas fa-star text-yellow-400 mr-3"></i>
+          Guest Reviews
+        </h2>
+        <p class="text-gray-400">
+          <%= listing.reviews.length %> <%= listing.reviews.length === 1 ? 'review' : 'reviews' %>
+        </p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      
+      <!-- Left Column - Add Review Form -->
+      <div class="order-2 lg:order-1">
+        <div class="bg-gray-900/50 rounded-2xl p-6 border border-gray-700/50">
+          <h3 class="text-xl font-semibold text-white mb-4 flex items-center">
+            <i class="fas fa-pen text-purple-400 mr-2"></i>
+            Write a Review
+          </h3>
+          
+          <form action="/listings/<%= listing.id %>/reviews" method="POST" class="space-y-4">
+            
+            <!-- Rating Input -->
+            <div>
+              <label class="block text-gray-300 mb-2 font-medium">Your Rating</label>
+              <div class="flex items-center gap-2 rating-stars">
+                <% for (let i = 5; i >= 1; i--) { %>
+                  <input type="radio" name="review[rating]" value="<%= i %>" id="star<%= i %>" class="hidden star-input" required>
+                  <label for="star<%= i %>" class="cursor-pointer text-3xl text-gray-600 hover:text-yellow-400 transition-all duration-300 transform hover:scale-110">
+                    <i class="fas fa-star"></i>
+                  </label>
+                <% } %>
+              </div>
+            </div>
+
+            <!-- Comment Input -->
+            <div>
+              <label for="comment" class="block text-gray-300 mb-2 font-medium">Your Review</label>
+              <textarea 
+                name="review[comment]" 
+                id="comment" 
+                rows="5" 
+                placeholder="Share your experience with this place..."
+                class="w-full bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300 resize-none"
+                required
+              ></textarea>
+            </div>
+
+            <!-- Submit Button -->
+            <button 
+              type="submit" 
+              class="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold py-3 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-purple-500/50 flex items-center justify-center gap-2"
+            >
+              <i class="fas fa-paper-plane"></i>
+              Submit Review
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Right Column - Reviews List -->
+      <div class="order-1 lg:order-2">
+        <div class="space-y-4 max-h-[600px] overflow-y-auto pr-2 custom-scrollbar">
+          
+          <% if(listing.reviews.length === 0) { %>
+            <!-- No Reviews State -->
+            <div class="text-center py-12">
+              <div class="w-20 h-20 bg-gray-700/50 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-comments text-gray-500 text-3xl"></i>
+              </div>
+              <p class="text-gray-400 text-lg">No reviews yet</p>
+              <p class="text-gray-500 text-sm mt-2">Be the first to share your experience!</p>
+            </div>
+          <% } else { %>
+            
+            <!-- Review Cards -->
+            <% listing.reviews.forEach((review) => { %>
+              <div class="bg-gray-900/50 rounded-2xl p-5 border border-gray-700/50 hover:border-purple-500/50 transition-all duration-300 group">
+                
+                <!-- Review Header -->
+                <div class="flex items-start justify-between mb-3">
+                  <div class="flex items-center gap-3">
+                    <!-- Avatar -->
+                    <div class="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center flex-shrink-0">
+                      <i class="fas fa-user text-white text-sm"></i>
+                    
+      
+                    </div>
+                    <div>
+                      <p class="text-white font-semibold">John Doe</p>
+                      <p class="text-gray-500 text-xs">
+                        <%= new Date(review.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) %>
+                      </p>
+                    </div>
+                  </div>
+
+                  <!-- Rating Display -->
+                  <div class="flex items-center gap-1 bg-yellow-500/20 px-3 py-1 rounded-full">
+                    <% for(let i = 1; i <= 5; i++) { %>
+                      <i class="fas fa-star text-<%= i <= review.rating ? 'yellow-400' : 'gray-600' %> text-sm"></i>
+                    <% } %>
+                  </div>
+                </div>
+
+                <!-- Review Comment -->
+                <p class=" text-white   mb-4">
+                  <%= review.comment %>
+                </p>
+
+                <!-- Delete Review Form -->
+                <form action="/listings/<%= listing.id %>/reviews/<%= review._id %>?_method=DELETE" method="POST">
+                  <button 
+                    type="submit" 
+                    class="text-red-400 hover:text-red-300 text-sm font-medium flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-all duration-300"
+                  >
+                    <i class="fas fa-trash-alt"></i>
+                    Delete
+                  </button>
+                </form>
+              </div>
+            <% }); %>
+
+          <% } %>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+  <script>
+  // Enhanced Star Rating System
+  document.addEventListener('DOMContentLoaded', function() {
+    const ratingStars = document.querySelector('.rating-stars');
+    if (!ratingStars) return;
+
+    const stars = ratingStars.querySelectorAll('.star-label');
+    const inputs = ratingStars.querySelectorAll('input');
+    
+    // Highlight stars on hover
+    stars.forEach((star, index) => {
+      star.addEventListener('mouseenter', () => {
+        highlightStars(index + 1);
+      });
+    });
+
+    // Reset to selected rating on mouse leave
+    ratingStars.addEventListener('mouseleave', () => {
+      const checkedInput = ratingStars.querySelector('input:checked');
+      if (checkedInput) {
+        const rating = parseInt(checkedInput.value);
+        highlightStars(rating);
+      } else {
+        highlightStars(0);
+      }
+    });
+
+    // Set permanent highlight on click
+    inputs.forEach((input) => {
+      input.addEventListener('change', () => {
+        const rating = parseInt(input.value);
+        highlightStars(rating);
+      });
+    });
+
+    function highlightStars(rating) {
+      stars.forEach((star, index) => {
+        if (index < rating) {
+          star.classList.remove('text-gray-600');
+          star.classList.add('text-yellow-400');
+        } else {
+          star.classList.remove('text-yellow-400');
+          star.classList.add('text-gray-600');
+        }
+      });
+    }
+  });
+</script>
+
+ 
+
+
 
 <!-- Delete Confirmation Modal
 <div id="deleteModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
