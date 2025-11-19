@@ -2,6 +2,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const Review=require('./review.js')
+
 const listingSchema = new Schema({
   title: {
     type:String,
@@ -25,7 +26,13 @@ const listingSchema = new Schema({
       type:Schema.Types.ObjectId,
       ref:"Review"
     }
-  ]
+  ],
+  owner:
+    {
+      type:Schema.Types.ObjectId,
+      ref:"User"
+    }
+  
   
 });
 /*This code is a Mongoose middleware (also called a “hook”) that automatically runs after a listing document is deleted using findOneAndDelete(). */
