@@ -48,7 +48,12 @@ router.post("/",validateListing, wrapAsync(async(req, res, next) => {
 // SHOW ROUTE
 router.get("/:id",wrapAsync(async (req,res)=>{
   let {id}=req.params
-  let listing=await Listing.findById(id).populate("reviews").populate("owner")
+  let listing=await Listing.findById(id).populate({path:"reviews",
+    populate:{
+      path:"author"
+    }
+
+  }).populate("owner")
 
   if(!listing){
     req.flash("failure","listing you requested for doesn't exist!")

@@ -179,7 +179,7 @@
         </div>
       </div>
     </div>
-    
+    <% if(currUser && listing.owner._id.equals(currUser._id)) {%>
     <!-- Action Buttons -->
     <div class="space-y-3">
       <a href="/listings/<%= listing.id %>/edit" class="block">
@@ -194,6 +194,7 @@
         </button>
       </form>
     </div>
+    <% } %>
  
 
     <!-- Contact Host -->
@@ -235,7 +236,7 @@
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-      
+      <% if(currUser) {%>
       <!-- Left Column - Add Review Form -->
       <div class="order-2 lg:order-1">
         <div class="bg-gray-900/50 rounded-2xl p-6 border border-gray-700/50">
@@ -283,6 +284,7 @@
           </form>
         </div>
       </div>
+      <%}%>
 
       <!-- Right Column - Reviews List -->
       <div class="order-1 lg:order-2">
@@ -313,7 +315,7 @@
       
                     </div>
                     <div>
-                      <p class="text-white font-semibold">John Doe</p>
+                      <p class="text-white font-semibold">@<%= review.author.username %></p>
                       <p class="text-gray-500 text-xs">
                         <%= new Date(review.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) %>
                       </p>
