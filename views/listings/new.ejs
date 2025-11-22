@@ -44,7 +44,7 @@
 <!-- Main Form -->
 <div class="relative z-10 px-4 pb-16">
   <div class="max-w-5xl mx-auto">
-    <form method="POST" action="/listings" class="space-y-6" id="listingForm">
+    <form method="POST" action="/listings" class="space-y-6" id="listingForm" enctype="multipart/form-data">
       
       <!-- Section 1: Basic Information -->
       <div class="bg-gray-800/50 backdrop-blur-lg rounded-3xl p-6 md:p-8 shadow-xl border border-gray-700/50 hover:border-purple-500/50 transition-all duration-300">
@@ -121,15 +121,14 @@
         <div>
           <label class="flex items-center text-white font-semibold mb-2">
             <i class="fas fa-image text-blue-400 mr-2"></i>
-            Image URL
+            Upload Listing Image
             
           </label>
           <input 
             name="listing[image]" 
-            placeholder="https://example.com/image.jpg" 
-            type="url"
+            type="file"
+            required
             class="w-full bg-gray-900/50 border-2 border-gray-700 rounded-xl px-4 py-4 text-white placeholder-gray-500 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 transition-all duration-300"
-            id="imageInput"
           />
           <p class="text-gray-500 text-sm mt-2">Use high-quality images (1920x1080 recommended)</p>
         </div>
