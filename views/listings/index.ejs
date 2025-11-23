@@ -1,122 +1,138 @@
 <% layout('/layouts/boilerplate') -%>
 
 <!-- Hero Section -->
-<section class="relative z-10 pt-36 pb-12 ">
-  <div class="max-w-6xl mx-auto text-center">
-    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
+<section class="relative z-10 pt-28 sm:pt-32 md:pt-36 pb-8 sm:pb-12 bg-black">
+  <div class="max-w-6xl mx-auto text-center px-4">
+    <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-3 sm:mb-4 bg-black bg-black text-transparent">
       Discover Your Next Adventure
     </h1>
-    <p class="text-lg md:text-xl text-gray-300 mb-6 max-w-3xl mx-auto">
+    <p class="text-base sm:text-lg md:text-xl text-gray-300 mb-4 sm:mb-6 max-w-3xl mx-auto">
       Explore unique stays and unforgettable experiences around the world
     </p>
     
     <!-- Create New Listing Button -->
     <form method="GET" action="/listings/new" class="inline-block">
-      <button class="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold py-3 px-8 rounded-full transition-all duration-300 shadow-lg hover:shadow-purple-500/50 hover:scale-105">
+      <button class="bg-gradient-to-r mb-8 from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold py-2.5 sm:py-3 px-6 sm:px-8 rounded-full transition-all duration-300 shadow-lg hover:shadow-purple-500/50 hover:scale-105 text-sm sm:text-base">
         <i class="fas fa-plus mr-2"></i>Create New Listing
       </button>
     </form>
   </div>
 </section>
 
-<!-- Category Filters (Optional) -->
-<div class="relative z-10 px-4 pb-6">
+<!-- Category Filters & Tax Toggle -->
+<div class="relative z-10 px-4 pb-4 sm:pb-6 bg-black">
   <div class="max-w-7xl mx-auto">
-    <div class="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
-      <button data-category="all" class="category-filter-btn px-5 py-2.5 <%= selectedCategory === 'all' ? 'bg-white text-black shadow-xl' : 'bg-gray-800/60 text-white border border-gray-700' %> rounded-full font-medium whitespace-nowrap hover:shadow-xl transition-all cursor-pointer">
-        <i class="fas fa-fire mr-2"></i>All Listings
+    <!-- Category Filters - Scrollable on mobile -->
+    <div class="flex gap-2 sm:gap-3 overflow-x-auto pb-3 scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0">
+      <button data-category="all" class="category-filter-btn px-3 sm:px-5 py-2 sm:py-2.5 <%= selectedCategory === 'all' ? 'bg-white text-black shadow-xl' : 'bg-gray-800/60 text-white border border-gray-700' %> rounded-full font-medium whitespace-nowrap hover:shadow-xl transition-all cursor-pointer text-sm sm:text-base">
+        <i class="fas fa-fire mr-1.5 sm:mr-2"></i>All
       </button>
-      <button data-category="Beachfront" class="category-filter-btn px-5 py-2.5 <%= selectedCategory === 'Beachfront' ? 'bg-white text-black shadow-xl' : 'bg-gray-800/60 text-white border border-gray-700' %> rounded-full whitespace-nowrap hover:shadow-xl transition-all cursor-pointer">
-        <i class="fas fa-umbrella-beach mr-2"></i>Beachfront
+      <button data-category="Beachfront" class="category-filter-btn px-3 sm:px-5 py-2 sm:py-2.5 <%= selectedCategory === 'Beachfront' ? 'bg-white text-black shadow-xl' : 'bg-gray-800/60 text-white border border-gray-700' %> rounded-full whitespace-nowrap hover:shadow-xl transition-all cursor-pointer text-sm sm:text-base">
+        <i class="fas fa-umbrella-beach mr-1.5 sm:mr-2"></i>Beachfront
       </button>
-      <button data-category="Mountains" class="category-filter-btn px-5 py-2.5 <%= selectedCategory === 'Mountains' ? 'bg-white text-black shadow-xl' : 'bg-gray-800/60 text-white border border-gray-700' %> rounded-full whitespace-nowrap hover:shadow-xl transition-all cursor-pointer">
-        <i class="fas fa-mountain mr-2"></i>Mountains
+      <button data-category="Mountains" class="category-filter-btn px-3 sm:px-5 py-2 sm:py-2.5 <%= selectedCategory === 'Mountains' ? 'bg-white text-black shadow-xl' : 'bg-gray-800/60 text-white border border-gray-700' %> rounded-full whitespace-nowrap hover:shadow-xl transition-all cursor-pointer text-sm sm:text-base">
+        <i class="fas fa-mountain mr-1.5 sm:mr-2"></i>Mountains
       </button>
-      <button data-category="Countryside" class="category-filter-btn px-5 py-2.5 <%= selectedCategory === 'Countryside' ? 'bg-white text-black shadow-xl' : 'bg-gray-800/60 text-white border border-gray-700' %> rounded-full whitespace-nowrap hover:shadow-xl transition-all cursor-pointer">
-        <i class="fas fa-tree mr-2"></i>Countryside
+      <button data-category="Countryside" class="category-filter-btn px-3 sm:px-5 py-2 sm:py-2.5 <%= selectedCategory === 'Countryside' ? 'bg-white text-black shadow-xl' : 'bg-gray-800/60 text-white border border-gray-700' %> rounded-full whitespace-nowrap hover:shadow-xl transition-all cursor-pointer text-sm sm:text-base">
+        <i class="fas fa-tree mr-1.5 sm:mr-2"></i>Countryside
       </button>
-      <button data-category="Urban" class="category-filter-btn px-5 py-2.5 <%= selectedCategory === 'Urban' ? 'bg-white text-black shadow-xl' : 'bg-gray-800/60 text-white border border-gray-700' %> rounded-full whitespace-nowrap hover:shadow-xl transition-all cursor-pointer">
-        <i class="fas fa-city mr-2"></i>Urban
+      <button data-category="Urban" class="category-filter-btn px-3 sm:px-5 py-2 sm:py-2.5 <%= selectedCategory === 'Urban' ? 'bg-white text-black shadow-xl' : 'bg-gray-800/60 text-white border border-gray-700' %> rounded-full whitespace-nowrap hover:shadow-xl transition-all cursor-pointer text-sm sm:text-base">
+        <i class="fas fa-city mr-1.5 sm:mr-2"></i>Urban
       </button>
+    </div>
+    
+    <!-- Tax Toggle - Responsive -->
+    <div class="flex justify-center sm:justify-end mt-3">
+      <div class="inline-flex items-center gap-2 sm:gap-3 bg-white rounded-full px-3 sm:px-4 py-1.5 sm:py-2 shadow-md border border-gray-200">
+        <span class="text-gray-700 text-xs sm:text-sm font-medium">Display total before taxes</span>
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input type="checkbox" id="taxToggle" class="sr-only peer">
+          <div class="w-10 sm:w-12 h-6 sm:h-7 bg-gray-300 rounded-full peer peer-checked:bg-gray-800 peer-focus:ring-2 peer-focus:ring-gray-400 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 sm:after:h-6 after:w-5 sm:after:w-6 after:transition-all after:shadow-md peer-checked:after:translate-x-4 sm:peer-checked:after:translate-x-5"></div>
+        </label>
+      </div>
     </div>
   </div>
 </div>
 
 <!-- Section Header -->
-<div class="relative z-10 px-4 mb-6">
+<div class="relative z-10 px-4 mb-4 sm:mb-6">
   <div class="max-w-7xl mx-auto">
-    <h2 class="text-2xl md:text-3xl font-bold text-white mb-1">
+    <h2 class="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-1">
       Featured Stays
     </h2>
-    <p class="text-gray-400">Handpicked properties for your perfect getaway</p>
+    <p class="text-gray-400 text-sm sm:text-base">Handpicked properties for your perfect getaway</p>
   </div>
 </div>
 
-<!-- Listings Grid -->
+<!-- Listings Grid - Responsive -->
 <div class="relative z-10 px-4 pb-16">
-  <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+  <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
     <% for (let list of listingsData) { %>
       <a href="/listings/<%= list.id %>" class="group block">
-        <div class="relative rounded-3xl overflow-hidden shadow-lg bg-white hover:shadow-2xl hover:shadow-purple-500/20 transition-all duration-300 hover:scale-105">
-          <!-- Image Container with Overlay -->
+        <div class="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg bg-white hover:shadow-2xl hover:shadow-purple-500/20 transition-all duration-300 hover:scale-[1.02] sm:hover:scale-105">
+          <!-- Image Container -->
           <div class="relative overflow-hidden">
             <img 
-              class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110" 
+              class="w-full h-48 sm:h-56 md:h-64 object-cover transition-transform duration-500 group-hover:scale-110" 
               src="<%= list.image.url %>" 
               alt="<%= list.title %>" 
             />
             <!-- Wishlist Button -->
-            <button class="absolute top-4 right-4 w-10 h-10 bg-black/40 hover:bg-black/60 backdrop-blur-sm rounded-full flex items-center justify-center transition-all z-10" onclick="event.preventDefault();">
-              <i class="far fa-heart text-white"></i>
+            <button class="absolute top-3 right-3 sm:top-4 sm:right-4 w-8 h-8 sm:w-10 sm:h-10 bg-black/40 hover:bg-black/60 backdrop-blur-sm rounded-full flex items-center justify-center transition-all z-10" onclick="event.preventDefault();">
+              <i class="far fa-heart text-white text-sm sm:text-base"></i>
             </button>
             <!-- Gradient Overlay -->
             <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           </div>
           
           <!-- Card Content -->
-          <div class="px-5 py-4">
-            <h3 class="font-bold text-xl mb-2 text-gray-900 group-hover:text-purple-600 transition-colors line-clamp-1">
+          <div class="px-4 sm:px-5 py-3 sm:py-4">
+            <h3 class="font-bold text-lg sm:text-xl mb-1.5 sm:mb-2 text-gray-900 group-hover:text-purple-600 transition-colors line-clamp-1">
               <%= list.title %>
             </h3>
-            <p class="text-gray-700 text-lg font-semibold">
-              ₹<%= list.price.toLocaleString("en-IN") %> <span class="text-sm font-normal text-gray-500">/night</span>
+            <p class="text-gray-700 text-base sm:text-lg font-semibold">
+              ₹<%= list.price.toLocaleString("en-IN") %> 
+              <span class="text-xs sm:text-sm font-normal text-gray-500">/night</span>
+              <i class="text-xs sm:text-sm font-normal text-gray-500 tax-info" style="display: none;">&nbsp;+18% GST</i>
             </p>
             
-            <!-- Optional: Add location if available -->
+            <!-- Location -->
             <% if (list.location) { %>
-              <p class="text-gray-500 text-sm mt-1">
+              <p class="text-gray-500 text-xs sm:text-sm mt-1">
                 <i class="fas fa-map-marker-alt mr-1"></i><%= list.location %>
               </p>
             <% } %>
+            
             <!-- Category Badge -->
-  <% if (list.category) { %>
-    <div class="mt-3">
-      <% 
-        // Define category colors and icons
-        const categoryStyles = {
-          'Beachfront': { color: 'bg-blue-100 text-blue-700 border-blue-200', icon: 'umbrella-beach' },
-          'Mountains': { color: 'bg-green-100 text-green-700 border-green-200', icon: 'mountain' },
-          'Countryside': { color: 'bg-yellow-100 text-yellow-700 border-yellow-200', icon: 'tree' },
-          'Urban': { color: 'bg-purple-100 text-purple-700 border-purple-200', icon: 'city' }
-        };
-        const style = categoryStyles[list.category] || { color: 'bg-gray-100 text-gray-700 border-gray-200', icon: 'tag' };
-      %>
-      <span class="inline-flex items-center px-3 py-1 text-xs font-medium rounded-full border <%= style.color %>">
-        <i class="fas fa-<%= style.icon %> mr-1.5"></i>
-        <%= list.category %>
-      </span>
-    </div>
-  <% } %>
+            <% if (list.category) { %>
+              <div class="mt-2 sm:mt-3">
+                <% 
+                  const categoryStyles = {
+                    'Beachfront': { color: 'bg-blue-100 text-blue-700 border-blue-200', icon: 'umbrella-beach' },
+                    'Mountains': { color: 'bg-green-100 text-green-700 border-green-200', icon: 'mountain' },
+                    'Countryside': { color: 'bg-yellow-100 text-yellow-700 border-yellow-200', icon: 'tree' },
+                    'Urban': { color: 'bg-purple-100 text-purple-700 border-purple-200', icon: 'city' }
+                  };
+                  const style = categoryStyles[list.category] || { color: 'bg-gray-100 text-gray-700 border-gray-200', icon: 'tag' };
+                %>
+                <span class="inline-flex items-center px-2 sm:px-3 py-0.5 sm:py-1 text-xs font-medium rounded-full border <%= style.color %>">
+                  <i class="fas fa-<%= style.icon %> mr-1 sm:mr-1.5"></i>
+                  <%= list.category %>
+                </span>
+              </div>
+            <% } %>
           </div>
           
           <!-- Action Buttons -->
-          <div class="px-5 pb-5 flex gap-2">
-            <button class="flex-1 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold py-2.5 px-4 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg" onclick="event.preventDefault(); window.location.href='/listings/<%= list.id %>'">
+          <div class="px-4 sm:px-5 pb-4 sm:pb-5 flex gap-2">
+            <button class="flex-1 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold py-2 sm:py-2.5 px-3 sm:px-4 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg text-sm sm:text-base" onclick="event.preventDefault(); window.location.href='/listings/<%= list.id %>'">
               View Details
             </button>
-            <button class="bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold py-2.5 px-4 rounded-lg transition-all duration-300" onclick="event.preventDefault();">
-              <i class="fas fa-share-alt"></i>
-            </button>
+            <!-- Share Button -->
+<button class="bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold py-2 sm:py-2.5 px-3 sm:px-4 rounded-lg transition-all duration-300 share-btn" 
+        onclick="event.preventDefault(); shareListing('<%= list.title %>', '<%= list.id %>');">
+  <i class="fas fa-share-alt"></i>
+</button>
           </div>
         </div>
       </a>
@@ -125,27 +141,27 @@
   
   <!-- No Listings Message -->
   <% if (listingsData.length === 0) { %>
-    <div class="text-center py-16">
-      <i class="fas fa-home text-6xl text-gray-600 mb-4"></i>
-      <h3 class="text-2xl font-bold text-white mb-2">No Listings Found</h3>
-      <p class="text-gray-400 mb-6">Be the first to create a listing!</p>
+    <div class="text-center py-12 sm:py-16">
+      <i class="fas fa-home text-5xl sm:text-6xl text-gray-600 mb-4"></i>
+      <h3 class="text-xl sm:text-2xl font-bold text-white mb-2">No Listings Found</h3>
+      <p class="text-gray-400 mb-6 text-sm sm:text-base">Be the first to create a listing!</p>
       <form method="GET" action="/listings/new" class="inline-block">
-        <button class="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold py-3 px-8 rounded-full transition-all duration-300">
+        <button class="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold py-2.5 sm:py-3 px-6 sm:px-8 rounded-full transition-all duration-300 text-sm sm:text-base">
           <i class="fas fa-plus mr-2"></i>Create Your First Listing
         </button>
       </form>
     </div>
   <% } %>
 </div>
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+  // ===== Category Filter =====
   const filterButtons = document.querySelectorAll('.category-filter-btn');
   
   filterButtons.forEach(button => {
     button.addEventListener('click', function() {
       const category = this.dataset.category;
-      
-      // Redirect to filtered page
       if (category === 'all') {
         window.location.href = '/listings';
       } else {
@@ -153,5 +169,143 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   });
+
+  // ===== Tax Toggle =====
+  const taxToggle = document.getElementById('taxToggle');
+  const taxInfoElements = document.querySelectorAll('.tax-info');
+  
+  if (taxToggle) {
+    taxToggle.addEventListener('change', function() {
+      taxInfoElements.forEach(info => {
+        info.style.display = this.checked ? 'inline' : 'none';
+      });
+    });
+  }
 });
+// ===== Share Functionality =====
+async function shareListing(title, listingId) {
+  const shareUrl = `${window.location.origin}/listings/${listingId}`;
+  const shareData = {
+    title: title,
+    text: `Check out this amazing stay: ${title}`,
+    url: shareUrl
+  };
+
+  // Check if Web Share API is supported (mostly mobile browsers)
+  if (navigator.share) {
+    try {
+      await navigator.share(shareData);
+    } catch (err) {
+      // User cancelled or error
+      if (err.name !== 'AbortError') {
+        console.error('Share failed:', err);
+        fallbackShare(shareUrl);
+      }
+    }
+  } else {
+    // Fallback for desktop browsers
+    fallbackShare(shareUrl);
+  }
+}
+
+function fallbackShare(url) {
+  // Try to copy to clipboard
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(url).then(() => {
+      showToast('Link copied to clipboard!');
+    }).catch(() => {
+      showShareModal(url);
+    });
+  } else {
+    showShareModal(url);
+  }
+}
+
+function showToast(message) {
+  // Remove existing toast if any
+  const existingToast = document.getElementById('share-toast');
+  if (existingToast) existingToast.remove();
+
+  // Create toast
+  const toast = document.createElement('div');
+  toast.id = 'share-toast';
+  toast.className = 'fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white px-6 py-3 rounded-full shadow-lg z-50 flex items-center gap-2 animate-fade-in';
+  toast.innerHTML = `<i class="fas fa-check-circle text-green-400"></i> ${message}`;
+  document.body.appendChild(toast);
+
+  // Remove after 3 seconds
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    toast.style.transition = 'opacity 0.3s ease';
+    setTimeout(() => toast.remove(), 300);
+  }, 3000);
+}
+
+function showShareModal(url) {
+  // Remove existing modal if any
+  const existingModal = document.getElementById('share-modal');
+  if (existingModal) existingModal.remove();
+
+  // Create modal
+  const modal = document.createElement('div');
+  modal.id = 'share-modal';
+  modal.className = 'fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4';
+  modal.innerHTML = `
+    <div class="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-xl font-bold text-gray-900">Share this listing</h3>
+        <button onclick="document.getElementById('share-modal').remove()" class="text-gray-500 hover:text-gray-700 text-xl">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      
+      <!-- Share Options -->
+      <div class="flex justify-center gap-4 mb-6">
+        <a href="https://wa.me/?text=${encodeURIComponent(url)}" target="_blank" class="w-12 h-12 bg-green-500 hover:bg-green-600 rounded-full flex items-center justify-center text-white transition-all">
+          <i class="fab fa-whatsapp text-xl"></i>
+        </a>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}" target="_blank" class="w-12 h-12 bg-blue-600 hover:bg-blue-700 rounded-full flex items-center justify-center text-white transition-all">
+          <i class="fab fa-facebook-f text-xl"></i>
+        </a>
+        <a href="https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}" target="_blank" class="w-12 h-12 bg-black hover:bg-gray-800 rounded-full flex items-center justify-center text-white transition-all">
+          <i class="fab fa-x-twitter text-xl"></i>
+        </a>
+        <a href="mailto:?body=${encodeURIComponent(url)}" class="w-12 h-12 bg-gray-600 hover:bg-gray-700 rounded-full flex items-center justify-center text-white transition-all">
+          <i class="fas fa-envelope text-xl"></i>
+        </a>
+      </div>
+      
+      <!-- Copy Link -->
+      <div class="flex gap-2">
+        <input type="text" value="${url}" readonly class="flex-1 bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 text-sm text-gray-700 outline-none" id="share-url-input"/>
+        <button onclick="copyShareLink()" class="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-4 py-2 rounded-lg font-medium transition-all">
+          Copy
+        </button>
+      </div>
+    </div>
+  `;
+  
+  document.body.appendChild(modal);
+
+  // Close on backdrop click
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) modal.remove();
+  });
+}
+
+function copyShareLink() {
+  const input = document.getElementById('share-url-input');
+  input.select();
+  
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(input.value).then(() => {
+      document.getElementById('share-modal').remove();
+      showToast('Link copied to clipboard!');
+    });
+  } else {
+    document.execCommand('copy');
+    document.getElementById('share-modal').remove();
+    showToast('Link copied to clipboard!');
+  }
+}
 </script>

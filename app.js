@@ -89,9 +89,7 @@ async function main() {
 
 
 
-app.get("/",(req,res)=>{
-  res.send("res send")
-})
+
 
 app.use((req,res,next)=>{
    next(new ExpressError(404,"Page not Found!"))
