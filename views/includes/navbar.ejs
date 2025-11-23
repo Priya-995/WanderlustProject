@@ -1,127 +1,266 @@
-<body
-  class="bg-gradient-to-br from-gray-900 via-black to-gray-950 min-h-screen relative overflow-x-hidden"
->
+
   <canvas id="particles-canvas" class="absolute inset-0 z-0"></canvas>
 
-  
-  <!-- Navbar -->
-  <nav id="navbar" class="fixed top-4 left-4 right-4 sm:top-6 sm:left-1/2 sm:right-auto sm:transform sm:-translate-x-1/2 rounded-full z-50 bg-gray-800/70 backdrop-blur-lg shadow-lg transition-all duration-300 sm:w-fit w-auto">
-    <div class="px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center py-3 sm:py-4">
-        <!-- Logo -->
-        <div class="flex items-center cursor-pointer hover:scale-105 transition-transform duration-300">
-          <i class="fas fa-globe-americas text-2xl sm:text-3xl lg:text-4xl bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent"></i>
-        </div>
-
-        <!-- Desktop Nav Links (hidden on mobile/tablet) -->
-        <div class="hidden lg:flex items-center space-x-6 xl:space-x-8 mx-6">
-          <a href="/listings" class="nav-link text-gray-300 hover:text-white transition-colors duration-300 font-medium whitespace-nowrap">Home</a>
-          <a href="/experiences" class="nav-link text-gray-300 hover:text-white transition-colors duration-300 font-medium whitespace-nowrap">Add new Listing</a>
-          <a href="/online" class="nav-link text-gray-300 hover:text-white transition-colors duration-300 font-medium whitespace-nowrap">Online</a>
-        </div>
-
-        
-         <!-- Desktop Search Bar (hidden on mobile/tablet) -->
-        <div class="hidden lg:block relative" style="width: 450px;">
-          <div class="flex items-center bg-gray-800/80 rounded-full px-4 xl:px-5 py-2 space-x-3 shadow-md hover:shadow-purple-500/30 transition-all duration-300">
-            <i class="fas fa-search text-purple-400"></i>
-            <input 
-              type="text" 
-              id="desktop-search-input"
-              placeholder="Search by name, country, category..." 
-              class="bg-transparent text-white placeholder-gray-400 outline-none flex-1 text-sm" 
-            />
-            <button 
-              id="desktop-clear-btn"
-              class="hidden text-gray-400 hover:text-white transition-colors"
-            >
-              <i class="fas fa-times text-xs"></i>
-            </button>
-            <button 
-              id="desktop-search-btn"
-              class="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white rounded-full px-3 xl:px-4 py-2 text-sm font-medium transition-all duration-300"
-            >
-              Search
-            </button>
-           <!-- User Menu (hidden on mobile) -->
-<div class="relative hidden sm:flex items-center gap-1 ml-1 bg-gray-800 hover:bg-gray-700 rounded-full px-2 py-1 cursor-pointer transition-all duration-300 shadow-md hover:shadow-purple-500/50" id="user-menu">
-  <i class="fas fa-bars text-gray-300 text-xs"></i>
-  <div class="w-6 h-6 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
-    <i class="fas fa-user text-white text-xs"></i>
-  </div>
-
-  <!-- Dropdown (hidden by default) -->
-   <% if(!currUser){ %>
- <div id="dropdown-menu" class="absolute right-0 top-10 w-40 bg-gray-800 rounded-xl shadow-lg border border-gray-700 hidden flex-col text-sm text-gray-200">
-
-  <button onclick="window.location.href='/login'" 
-          class="px-4 py-2 text-left hover:bg-gray-700 rounded-t-xl transition-all duration-200">
-    Login
-  </button>
-
-  <button onclick="window.location.href='/signup'" 
-          class="px-4 py-2 text-left hover:bg-gray-700 rounded-b-xl transition-all duration-200">
-    Sign Up
-  </button>
-
-</div>
-
-<% } %>
-<% if(currUser){ %>
-  <div id="dropdown-menu" class="absolute right-0 top-10 w-40 bg-gray-800 rounded-xl shadow-lg border border-gray-700 hidden flex-col text-sm text-gray-200">
-    <button onclick="window.location.href='/logout'" 
-          class="px-4 py-2 text-left hover:bg-gray-700 rounded-b-xl transition-all duration-200">
-    Log out
-  </button>
-  </div>
-<% } %>
-</div>
+<!-- Navbar -->
+<nav id="navbar" class="fixed top-4 left-4 right-4 sm:top-6 sm:left-6 sm:right-6 lg:left-1/2 lg:right-auto lg:transform lg:-translate-x-1/2 rounded-full z-50 bg-gray-800/70 backdrop-blur-lg shadow-lg transition-all duration-300 lg:w-fit w-auto">
+  <div class="px-4 sm:px-6">
+    <div class="flex justify-between items-center py-2 sm:py-3 gap-3">
+      <!-- Logo -->
+      <a href="/listings" class="flex-shrink-0 flex items-center cursor-pointer hover:scale-105 transition-transform duration-300">
+        <i class="fas fa-globe-americas text-xl sm:text-2xl lg:text-3xl bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent"></i>
+      </a>
 
 
-          </div>
 
+      
 
-        <!-- Mobile Menu Button -->
-        <button id="mobile-menu-btn" class="sm:hidden text-white text-xl focus:outline-none">
-          <i class="fas fa-bars"></i>
+      <!-- Mobile/Tablet Search Bar (INLINE - shown on mobile/tablet, hidden on lg+) -->
+      <form id="mobile-search-form" action="/listings" method="GET" class="lg:hidden flex items-center bg-gray-800/80 rounded-full px-3 py-1.5 gap-2 flex-1 min-w-0">
+        <i class="fas fa-search text-purple-400 text-xs flex-shrink-0"></i>
+        <input 
+          type="text" 
+          name="search"
+          id="mobile-search-input"
+          placeholder="Search title.." 
+          class="bg-transparent text-white placeholder-gray-400 outline-none flex-1 text-xs min-w-0"
+          autocomplete="off"
+        />
+        <button type="button" id="mobile-clear-btn" class="hidden text-gray-400 hover:text-white transition-colors flex-shrink-0">
+          <i class="fas fa-times text-xs"></i>
         </button>
+        <button type="submit" class="bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full px-2.5 py-1 text-xs font-medium flex-shrink-0">
+          Search
+        </button>
+      </form>
+
+      <!-- Desktop Nav Links (hidden on mobile/tablet) -->
+      <div class="hidden lg:flex items-center space-x-6 xl:space-x-8 mx-6">
+        <a href="/listings" class="nav-link text-gray-300 hover:text-white transition-colors duration-300 font-medium whitespace-nowrap">Explore</a>
+        <a href="/listings/new" class="nav-link text-gray-300 hover:text-white transition-colors duration-300 font-medium whitespace-nowrap">Airbnb your home</a>
       </div>
 
-      <!-- Mobile/Tablet Search Bar -->
-      <div class="lg:hidden pb-3 pt-1">
-        <div class="flex items-center bg-gray-800/80 rounded-full px-4 py-2.5 space-x-3">
-          <i class="fas fa-search text-purple-400 text-sm"></i>
-          <input type="text" placeholder="Where are you going?" class="bg-transparent text-white placeholder-gray-400 outline-none flex-1 text-sm" />
-          <button class="bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium">Search</button>
+      <!-- Desktop Search Bar (HIDDEN on mobile/tablet, shown on lg+) -->
+      <div class="hidden lg:block relative" style="width: 420px;">
+        <form id="desktop-search-form" action="/listings" method="GET" class="flex items-center bg-gray-800/80 rounded-full px-4 xl:px-5 py-2 space-x-3 shadow-md hover:shadow-purple-500/30 transition-all duration-300">
+          <i class="fas fa-search text-purple-400"></i>
+          <input 
+            type="text" 
+            name="search"
+            id="desktop-search-input"
+            placeholder="Search title, location, country..." 
+            class="bg-transparent text-white placeholder-gray-400 outline-none flex-1 text-sm" 
+            autocomplete="off"
+          />
+          <button 
+            type="button"
+            id="desktop-clear-btn"
+            class="hidden text-gray-400 hover:text-white transition-colors"
+          >
+            <i class="fas fa-times text-xs"></i>
+          </button>
+          <button 
+            type="submit"
+            class="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white rounded-full px-3 xl:px-4 py-2 text-sm font-medium transition-all duration-300"
+          >
+            Search
+          </button>
+        </form>
+      </div>
+
+      <!-- User Menu (Desktop only) -->
+      <div class="relative hidden lg:flex items-center gap-1 ml-4 bg-gray-800 hover:bg-gray-700 rounded-full px-3 py-2 cursor-pointer transition-all duration-300 shadow-md hover:shadow-purple-500/50" id="user-menu">
+        <i class="fas fa-bars text-gray-300 text-sm mr-1"></i>
+        <div class="w-7 h-7 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
+          <i class="fas fa-user text-white text-xs"></i>
         </div>
-      </div>
-    </div>
 
-    <!-- Mobile Menu Dropdown -->
-    <div id="mobile-menu" class="hidden rounded-b-3xl overflow-hidden">
-      <div class="bg-gray-800/95 backdrop-blur-lg border-t border-gray-700 px-4 py-5 space-y-2">
-        <a href="/listings" class="block text-gray-300 hover:text-white hover:bg-gray-700 rounded-lg px-4 py-3 transition-all duration-300 font-medium">Home</a>
-        <a href="/experiences" class="block text-gray-300 hover:text-white hover:bg-gray-700 rounded-lg px-4 py-3 transition-all duration-300 font-medium">Experiences</a>
-        <a href="/online" class="block text-gray-300 hover:text-white hover:bg-gray-700 rounded-lg px-4 py-3 transition-all duration-300 font-medium">Online</a>
-        <a href="/become-host" class="block text-gray-300 hover:text-white hover:bg-gray-700 rounded-lg px-4 py-3 transition-all duration-300 font-medium">Become a Host</a>
-        <hr class="border-gray-700 my-3" />
-        <a href="/login" class="block text-gray-300 hover:text-white hover:bg-gray-700 rounded-lg px-4 py-3 transition-all duration-300 font-medium">Log in</a>
-        <a href="/signup" class="block text-gray-300 hover:text-white hover:bg-gray-700 rounded-lg px-4 py-3 transition-all duration-300 font-medium">Sign up</a>
+        <!-- Dropdown Menu -->
+        <% if(!currUser){ %>
+        <div id="dropdown-menu" class="absolute right-0 hidden top-12 w-48 bg-gray-800 rounded-xl shadow-lg border border-gray-700 flex-col text-sm text-gray-200 overflow-hidden">
+          <button 
+  onclick="window.location.href='/login'" 
+  class="w-full px-4 py-3 text-left hover:bg-gray-700 transition-all duration-200 flex items-center gap-2"
+>
+  <i class="fas fa-sign-in-alt text-purple-400"></i> 
+  Login
+</button>
+
+        <button 
+  onclick="window.location.href='/signup'" 
+  class="w-full px-4 py-3 text-left hover:bg-gray-700 transition-all duration-200 flex items-center gap-2"
+>
+  <i class="fas fa-user-plus text-pink-400"></i>
+  Sign Up
+</button>
+
+        </div>
+        <% } %>
+        <% if(currUser){ %>
+        <div id="dropdown-menu" class="absolute right-0 top-12 w-48 bg-gray-800 rounded-xl shadow-lg border border-gray-700 hidden flex-col text-sm text-gray-200 overflow-hidden">
+          <div class="px-4 py-3 border-b border-gray-700 text-gray-400 text-xs">
+            Welcome back!
+          </div>
+          <button onclick="window.location.href='/logout'" class="px-4 py-3 text-left hover:bg-gray-700 transition-all duration-200 flex items-center gap-2">
+            <i class="fas fa-sign-out-alt text-red-400"></i> Log out
+          </button>
+        </div>
+        <% } %>
       </div>
+
+      <!-- Mobile/Tablet Menu Button -->
+      <button id="mobile-menu-btn" class="lg:hidden text-white text-lg focus:outline-none p-1.5 hover:bg-gray-700 rounded-full transition-all flex-shrink-0">
+        <i class="fas fa-bars" id="menu-icon"></i>
+      </button>
     </div>
-  </nav>
-</body>
- <!-- Script -->
+  </div>
+
+  <!-- Mobile Menu Dropdown -->
+  <div id="mobile-menu" class="hidden lg:hidden rounded-b-3xl overflow-hidden">
+    <div class="bg-gray-800/95 backdrop-blur-lg border-t border-gray-700 px-4 py-4 space-y-1">
+      <!-- Navigation Links -->
+      <p class="text-gray-500 text-xs uppercase tracking-wider px-4 py-2">Navigation</p>
+      <a href="/listings" class="flex items-center gap-3 text-gray-300 hover:text-white hover:bg-gray-700 rounded-xl px-4 py-3 transition-all duration-300 font-medium">
+        <i class="fas fa-compass text-purple-400 w-5"></i> Explore
+      </a>
+      <a href="/listings/new" class="flex items-center gap-3 text-gray-300 hover:text-white hover:bg-gray-700 rounded-xl px-4 py-3 transition-all duration-300 font-medium">
+        <i class="fas fa-home text-pink-400 w-5"></i> Airbnb your home
+      </a>
+      
+      <!-- Categories -->
+      <p class="text-gray-500 text-xs uppercase tracking-wider px-4 py-2 mt-3">Categories</p>
+      <a href="/listings?category=Beachfront" class="flex items-center gap-3 text-gray-300 hover:text-white hover:bg-gray-700 rounded-xl px-4 py-3 transition-all duration-300">
+        <i class="fas fa-umbrella-beach text-blue-400 w-5"></i> Beachfront
+      </a>
+      <a href="/listings?category=Mountains" class="flex items-center gap-3 text-gray-300 hover:text-white hover:bg-gray-700 rounded-xl px-4 py-3 transition-all duration-300">
+        <i class="fas fa-mountain text-green-400 w-5"></i> Mountains
+      </a>
+      <a href="/listings?category=Countryside" class="flex items-center gap-3 text-gray-300 hover:text-white hover:bg-gray-700 rounded-xl px-4 py-3 transition-all duration-300">
+        <i class="fas fa-tree text-yellow-400 w-5"></i> Countryside
+      </a>
+      <a href="/listings?category=Urban" class="flex items-center gap-3 text-gray-300 hover:text-white hover:bg-gray-700 rounded-xl px-4 py-3 transition-all duration-300">
+        <i class="fas fa-city text-purple-400 w-5"></i> Urban
+      </a>
+
+      <hr class="border-gray-700 my-3" />
+      
+      <!-- Account Section -->
+      <p class="text-gray-500 text-xs uppercase tracking-wider px-4 py-2">Account</p>
+      <% if(!currUser){ %>
+      <a href="/login" class="flex items-center gap-3 text-gray-300 hover:text-white hover:bg-gray-700 rounded-xl px-4 py-3 transition-all duration-300 font-medium">
+        <i class="fas fa-sign-in-alt text-purple-400 w-5"></i> Log in
+      </a>
+      <a href="/signup" class="flex items-center gap-3 text-gray-300 hover:text-white hover:bg-gray-700 rounded-xl px-4 py-3 transition-all duration-300 font-medium">
+        <i class="fas fa-user-plus text-pink-400 w-5"></i> Sign up
+      </a>
+      <% } %>
+      <% if(currUser){ %>
+      <a href="/logout" class="flex items-center gap-3 text-gray-300 hover:text-white hover:bg-gray-700 rounded-xl px-4 py-3 transition-all duration-300 font-medium">
+        <i class="fas fa-sign-out-alt text-red-400 w-5"></i> Log out
+      </a>
+      <% } %>
+    </div>
+  </div>
+</nav>
+
+<!-- Script -->
 <script>
+document.addEventListener('DOMContentLoaded', function() {
+  
+  // ===== Mobile Menu Toggle =====
+  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const menuIcon = document.getElementById('menu-icon');
+  
+  if (mobileMenuBtn && mobileMenu && menuIcon) {
+    mobileMenuBtn.addEventListener('click', function() {
+      
+      
+      // Toggle icon between bars and X
+      if (mobileMenu.classList.contains('hidden')) {
+        menuIcon.classList.remove('fa-times');
+        menuIcon.classList.add('fa-bars');
+      } else {
+        menuIcon.classList.remove('fa-bars');
+        menuIcon.classList.add('fa-times');
+      }
+    });
+  }
+
+  // ===== Desktop User Menu Dropdown =====
   const userMenu = document.getElementById('user-menu');
-  const dropdown = document.getElementById('dropdown-menu');
+  const dropdownMenu = document.getElementById('dropdown-menu');
+  
+  if (userMenu && dropdownMenu) {
+    userMenu.addEventListener('click', function(e) {
+      e.stopPropagation();
+      dropdownMenu.classList.toggle('hidden');
+    });
+    
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!userMenu.contains(e.target)) {
+        dropdownMenu.classList.add('hidden');
+      }
+    });
+  }
 
-  userMenu.addEventListener('click', () => {
-    dropdown.classList.toggle('hidden');
+  // ===== Desktop Search =====
+  const desktopSearchInput = document.getElementById('desktop-search-input');
+  const desktopClearBtn = document.getElementById('desktop-clear-btn');
+
+  if (desktopSearchInput && desktopClearBtn) {
+    desktopSearchInput.addEventListener('input', function() {
+      desktopClearBtn.classList.toggle('hidden', !this.value);
+    });
+    
+    desktopClearBtn.addEventListener('click', function() {
+      desktopSearchInput.value = '';
+      desktopClearBtn.classList.add('hidden');
+      desktopSearchInput.focus();
+    });
+  }
+
+  // ===== Mobile Search =====
+  const mobileSearchInput = document.getElementById('mobile-search-input');
+  const mobileClearBtn = document.getElementById('mobile-clear-btn');
+
+  if (mobileSearchInput && mobileClearBtn) {
+    mobileSearchInput.addEventListener('input', function() {
+      mobileClearBtn.classList.toggle('hidden', !this.value);
+    });
+    
+    mobileClearBtn.addEventListener('click', function() {
+      mobileSearchInput.value = '';
+      mobileClearBtn.classList.add('hidden');
+      mobileSearchInput.focus();
+    });
+  }
+
+  // ===== Preserve search query from URL =====
+  const urlParams = new URLSearchParams(window.location.search);
+  const searchQuery = urlParams.get('search');
+  
+  if (searchQuery) {
+    if (desktopSearchInput) {
+      desktopSearchInput.value = searchQuery;
+      if (desktopClearBtn) desktopClearBtn.classList.remove('hidden');
+    }
+    if (mobileSearchInput) {
+      mobileSearchInput.value = searchQuery;
+      if (mobileClearBtn) mobileClearBtn.classList.remove('hidden');
+    }
+  }
+
+  // ===== Close mobile menu on window resize to desktop =====
+  window.addEventListener('resize', function() {
+    if (window.innerWidth >= 1024 && mobileMenu) {
+      mobileMenu.classList.add('hidden');
+      if (menuIcon) {
+        menuIcon.classList.remove('fa-times');
+        menuIcon.classList.add('fa-bars');
+      }
+    }
   });
 
-  // Optional: click outside to close
-  document.addEventListener('click', (e) => {
-    if (!userMenu.contains(e.target)) dropdown.classList.add('hidden');
-  });
+});
 </script>

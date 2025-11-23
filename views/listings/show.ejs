@@ -198,7 +198,7 @@
  
 
     <!-- Contact Host -->
-    <div class="mt-6 bg-gray-800/50 backdrop-blur-lg rounded-2xl p-5 border border-gray-700">
+    <!-- <div class="mt-6 bg-gray-800/50 backdrop-blur-lg rounded-2xl p-5 border border-gray-700">
       <div class="flex items-center mb-3">
         <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mr-3">
           <i class="fas fa-user text-white"></i>
@@ -211,7 +211,10 @@
       <button class="w-full bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2.5 rounded-xl transition-all duration-300">
         Contact Host
       </button>
-    </div>
+    </div> -->
+    
+      <div id="map" class="mt-8"></div>
+   
   </div>
 </div>
 </div>
@@ -402,6 +405,21 @@
       });
     }
   });
+   let mapToken="<%=process.env.MAP_TOKEN%>"
+   let listingTitle="<%=listing.title%>";
+   const coordinates=<%-JSON.stringify(listing.geometry.coordinates)%>
+    console.log(mapToken)
+    mapboxgl.accessToken = mapToken;
+    const map = new mapboxgl.Map({
+        container: 'map', // container ID
+          style: 'mapbox://styles/mapbox/streets-v12',
+        center: coordinates, // starting position [lng, lat]. Note that lat must be set between -90 and 90
+        zoom: 9 // starting zoom
+    });
+     const marker = new mapboxgl.Marker({ color: 'red' })
+        .setLngLat(coordinates)
+        .setPopup(new mapboxgl.Popup({offset: 25}).setHTML(`<h1>${listingTitle}</h1>`))
+        .addTo(map);
 </script>
 
  

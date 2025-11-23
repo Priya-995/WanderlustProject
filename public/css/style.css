@@ -1,5 +1,5 @@
 body{
-    background-color: blueviolet;
+    background-color: black;
 }
 @keyframes float {
             0%, 100% { transform: translateY(0px); }
@@ -123,4 +123,12 @@ body{
     transform: translateY(0);
   }
 }
-  
+.tax-info{
+  display: none;
+}
+
+#map {
+    width: 400px; 
+    height: 300px;
+    border-radius: 25px;
+  }
