@@ -64,7 +64,7 @@ module.exports.create=async(req, res, next) => {
   newListing.owner=req.user._id;
   newListing.image={url,filename}
   newListing.geometry=response.body.features[0].geometry; // adding coordinates
-  let savedListing=await newListing.save();
+  await newListing.save();
   req.flash("success","New listing Created!");
   res.redirect("/listings");
 }
@@ -118,7 +118,7 @@ module.exports.destroyListing=async (req,res)=>{
   let {id}=req.params
   await Listing.findByIdAndDelete(id);
     req.flash("success","Listing deleted!");
-  res.redirect("/listings")
+   res.redirect("/listings")
 
 }
 

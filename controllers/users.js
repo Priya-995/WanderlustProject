@@ -1,10 +1,10 @@
 const User = require("../models/user");
 
 
-module.exports.renderSignupForm=async (req, res) => {
+module.exports.renderSignupForm=(req, res) => {
   res.render("users/signup.ejs");
 }
-module.exports.signup=async (req, res) => {
+module.exports.signup=async (req, res,next) => {
     try {
       let { username, email, password } = req.body;
       let newUser = new User({ email, username });
@@ -24,10 +24,10 @@ module.exports.signup=async (req, res) => {
       res.redirect("/signup");
     }
   }
-  module.exports.renderLoginForm=async (req, res) => {
+  module.exports.renderLoginForm= (req, res) => {
   res.render("users/login.ejs");
 }
-  module.exports.login=async (req, res) => {
+  module.exports.login= (req, res) => {
     req.flash("success", "Welcome back to Wanderlust!");
     let redirectUrl=res.locals.redirectUrl||"/listings"
     res.redirect(redirectUrl);

@@ -14,16 +14,56 @@ const listingRouter = require('./routes/listing.js')
 const reviewRouter = require('./routes/review.js')
 const userRouter = require('./routes/user.js')
 const session=require('express-session')
+const MongoStore = require("connect-mongo");
 const flash=require('connect-flash')
 const passport=require('passport')
 const LocalStrategy=require('passport-local')
 const User = require('./models/user');
+const dbUrl=process.env.ATLASDB_URL;
 
+
+
+
+// Set the view engine to EJS
+app.set('view engine', 'ejs');
+// Set the directory where the views are located
+app.set('views', path.join(__dirname, 'views'));
+// Middleware to parse URL-encoded data
+app.use(express.urlencoded({ extended: true }));
+
+app.use(methodOverride("_method"))
+// use ejs-locals for all ejs templates:
+app.engine('ejs', ejsMate);
+// Middleware to serve the public folder
+app.use(express.static(path.join(__dirname, '/public')));
+
+
+
+main().then(()=>{
+    console.log('connected to DB');
+})
+.catch(err => console.log(err));
+
+async function main() {
+  await mongoose.connect(dbUrl);
+
+  // use `await mongoose.connect('mongodb://user:password@127.0.0.1:27017/test');` if your database has auth enabled
+}
+
+const store = MongoStore.create({
+  mongoUrl: dbUrl,
+  touchAfter: 24 * 3600,
+});
+
+store.on("error", (err) => {
+  console.log("Error in mongo session store:", err);
+});
 
 const sessionOptions={
+  store,
   secret:"mysecretsupercode",
   resave:false,
-  saveUninitialized:true,
+  saveUninitialized:false,
   cookie:{
     expires:Date.now()+7*24*60*60*1000,
     maxAge:7*24*60*60*1000,
@@ -40,19 +80,6 @@ passport.use(new LocalStrategy(User.authenticate()));
 // use static serialize and deserialize of model for passport session support
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
-
-// Set the view engine to EJS
-app.set('view engine', 'ejs');
-// Set the directory where the views are located
-app.set('views', path.join(__dirname, 'views'));
-// Middleware to parse URL-encoded data
-app.use(express.urlencoded({ extended: true }));
-
-app.use(methodOverride("_method"))
-// use ejs-locals for all ejs templates:
-app.engine('ejs', ejsMate);
-// Middleware to serve the public folder
-app.use(express.static(path.join(__dirname, '/public')));
 
 app.use((req,res,next)=>{
   res.locals.success=req.flash("success")
@@ -75,17 +102,6 @@ app.use('/listings/:id/reviews',reviewRouter)
 app.use('/',userRouter)
 
 
-const MONGO_URL="mongodb://127.0.0.1:27017/wanderlust"
-main().then(()=>{
-    console.log('connected to DB');
-})
-.catch(err => console.log(err));
-
-async function main() {
-  await mongoose.connect(MONGO_URL);
-
-  // use `await mongoose.connect('mongodb://user:password@127.0.0.1:27017/test');` if your database has auth enabled
-}
 
 
 
@@ -96,7 +112,11 @@ app.use((req,res,next)=>{
 })
 
 app.use((err, req, res, next) => {
- 
+ // Catch the "headers already sent" error and log it without crashing
+  if (err.code === 'ERR_HTTP_HEADERS_SENT') {
+    console.error('Warning: Headers already sent error (non-critical)');
+    return; // Don't crash, just return
+  }
   let {status=500, message="Something went wrong!"} = err;
   res.status(status).render("error",{message}); 
 })

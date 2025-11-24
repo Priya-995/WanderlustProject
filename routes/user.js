@@ -12,15 +12,15 @@ router.post(
   wrapAsync(UserController.signup)
 );
 
-router.get("/login",saveRedirectUrl,UserController.renderLoginForm );
+router.get("/login",UserController.renderLoginForm );
 
 router.post(
   "/login",saveRedirectUrl,
   passport.authenticate("local", {
     failureRedirect: "/login",
-    failureFlash: "true",
+    failureFlash: true,
   }),
-  wrapAsync(UserController.login)
+  UserController.login
 );
 
 router.get("/logout",UserController.logout);
