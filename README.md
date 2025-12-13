@@ -283,18 +283,6 @@ wanderlust/
 
 ---
 
-## 📸 Screenshots
-
-### Homepage
-*Coming soon - Add your screenshot here*
-
-### Property Listing
-*Coming soon - Add your screenshot here*
-
-### Create New Listing
-*Coming soon - Add your screenshot here*
-
----
 
 ## 🤝 Contributing
 
@@ -306,13 +294,6 @@ Contributions make the open-source community an amazing place to learn and creat
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
----
-
-## 🐛 Known Issues
-
-- Cold starts on Render free tier (~30 seconds first load)
-- Image upload size limited to 10MB
-- Session expires after 24 hours
 
 ---
 
@@ -329,44 +310,6 @@ Contributions make the open-source community an amazing place to learn and creat
 - [ ] Advanced search filters
 - [ ] User profiles and verification
 
----
-
-## 📝 License
-
-Distributed under the MIT License. See `LICENSE` for more information.
-
----
-
-## 👨‍💻 Author
-
-**Your Name**
-
-- GitHub: [@yourusername](https://github.com/yourusername)
-- LinkedIn: [Your Name](https://linkedin.com/in/yourprofile)
-- Email: your.email@example.com
-
----
-
-## 🙏 Acknowledgments
-
-- [Airbnb](https://www.airbnb.com/) - Design inspiration
-- [Node.js Documentation](https://nodejs.org/)
-- [Express.js Guide](https://expressjs.com/)
-- [MongoDB Documentation](https://docs.mongodb.com/)
-- [Cloudinary](https://cloudinary.com/)
-- [Render](https://render.com/)
-
----
-
-## 📞 Support
-
-If you like this project, please give it a ⭐ on GitHub!
-
-For support or queries:
-- Create an issue in this repository
-- Email: your.email@example.com
-
----
 
 <div align="center">
 
