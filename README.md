@@ -10,8 +10,7 @@
 
 **A full-stack rental platform inspired by Airbnb**
 
-[🔗 Live Demo](https://wanderlust-project-25gj.onrender.com/listings) | [📹 Video Demo](#) | [🐛 Report Bug](#) | [✨ Request Feature](#)
-
+[🔗 Live Demo](https://wanderlust-project-25gj.onrender.com/listings)
 </div>
 
 ---
